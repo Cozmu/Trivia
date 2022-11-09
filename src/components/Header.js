@@ -35,7 +35,7 @@ Header.propTypes = {
   score: PropTypes.number.isRequired,
 };
 
-mapStateToProps = () => ({
+const mapStateToProps = () => ({
   profilePicture: '',
   playerName: '',
   score: 0,
