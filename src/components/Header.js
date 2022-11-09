@@ -1,5 +1,6 @@
-import React from "react";
-import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 
 class Header extends React.Component {
   render() {
@@ -8,21 +9,33 @@ class Header extends React.Component {
       <header>
         <img
           data-testid="header-profile-picture"
-          src={profilePicture}
+          src={ profilePicture }
           alt=""
         />
         <h3
           data-testid="header-player-name"
-        >{playerName}</h3>
+        >
+          { playerName }
+
+        </h3>
         <h3
           data-testid="header-score"
-        >{score}</h3>
+        >
+          { score }
+
+        </h3>
       </header>
     );
   }
 }
 
-mapStateToProps = (state) => ({
+Header.propTypes = {
+  profilePicture: PropTypes.string.isRequired,
+  playerName: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+};
+
+mapStateToProps = () => ({
   profilePicture: '',
   playerName: '',
   score: 0,
