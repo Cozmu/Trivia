@@ -8,21 +8,37 @@ class Game extends React.Component {
   state = {
     isLoading: true,
     indexQuestion: 0,
+    buttoncolor: false,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { dispatch } = this.props;
     const storage = localStorage.getItem('token');
-    dispatch(fetchQuestion(storage))
+    const x = await fetchQuestion(storage);
+    dispatch(x)
       .then(() => {
-        this.setState({ isLoading: false });
         const ERROR = 3;
         const { history, responseCode } = this.props;
         if (responseCode === ERROR) {
           history.push('/');
         }
+        if (x) {
+          this.setState({ isLoading: false });
+        }
       });
   }
+
+  revealAnswer = () => {
+    this.setState({ buttoncolor: true });
+  };
+
+  handleColor = (value) => {
+    const { buttoncolor } = this.state;
+    if (buttoncolor) {
+      return value ? 'green-border' : 'red-border';
+    }
+    return '';
+  };
 
   shuffle = (question, index) => {
     const meio = 0.5;
@@ -37,11 +53,13 @@ class Game extends React.Component {
     });
     return answerRandom.map((e, i) => (
       <button
+        className={ this.handleColor(e.value) }
+        onClick={ this.revealAnswer }
         key={ i }
         type="button"
         data-testid={ e.value ? 'correct-answer' : `wrong-answer${i}` }
       >
-        {e.value ? e.answers : e.answers}
+        { e.answers}
       </button>
     ));
   };
@@ -73,15 +91,12 @@ class Game extends React.Component {
     );
   }
 }
-
 const mapStateToProps = (state) => ({
   responseCode: state.questions.responseCode,
   results: state.questions.results,
   // isLoading: state.questions.isLoading,
 });
-
 Game.propTypes = {
   dispatch: PropTypes.func,
 }.isRequired;
-
 export default connect(mapStateToProps)(Game);
