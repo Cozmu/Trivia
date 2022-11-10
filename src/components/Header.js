@@ -1,12 +1,12 @@
 // import PropTypes from 'prop-types';
 import React from 'react';
-import md5 from 'crypto-js/md5';
+// import md5 from 'crypto-js/md5';
 
 class Header extends React.Component {
-  gravatarImg = (email) => {
-    const hash = md5(email).toString();
-    return `https://www.gravatar.com/avatar/${hash}`;
-  };
+  // gravatarImg = (email) => {
+  //   const hash = md5(email).toString();
+  //   return `https://www.gravatar.com/avatar/${hash}`;
+  // };
 
   render() {
     // const { profilePicture, playerName, score } = this.props;
