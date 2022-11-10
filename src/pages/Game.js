@@ -6,7 +6,7 @@ import { fetchQuestion } from '../redux/actions/index';
 
 class Game extends React.Component {
   state = {
-    // indexQuestion: 0,
+    indexQuestion: 0,
     arrayOfAnswers: [],
   };
 
@@ -24,19 +24,24 @@ class Game extends React.Component {
   }
 
   shuffle = (question, index) => {
-    const correctAnswers = { answers: question[index].correct_answer, value: true };
-    const incorrectAnswers = question[index].incorrect_answers
-      .map((e) => ({ answers: e, value: false }));
-    const answers = [correctAnswers, ...incorrectAnswers];
-    console.log(answers);
     const meio = 0.5;
-    const answerRandom = answers.sort(() => Math.random() - meio);
+    const answers = [question[index].correct_answer,
+      ...question[index].incorrect_answers];
+    console.log(answers);
+    const arrAnimais = answers.sort(() => Math.random() - meio);
+    console.log(arrAnimais);
+    const answerRandom = arrAnimais.map((e) => {
+      if (e === question[index].correct_answer) {
+        return { answers: e, value: true };
+      }
+      return { answers: e, value: false };
+    });
     this.setState({ arrayOfAnswers: answerRandom });
   };
 
   render() {
     const { results, isLoading } = this.props;
-    const { arrayOfAnswers } = this.state;
+    const { arrayOfAnswers, indexQuestion } = this.state;
     console.log(arrayOfAnswers);
     return (
       <main>
@@ -56,7 +61,7 @@ class Game extends React.Component {
               </p>
               <button
                 type="button"
-                onClick={ () => this.shuffle(results, 0) }
+                onClick={ () => this.shuffle(results, indexQuestion) }
               >
                 sim
               </button>
