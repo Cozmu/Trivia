@@ -33,7 +33,6 @@ class Header extends React.Component {
     );
   }
 }
-
 // Header.propTypes = {
 //   profilePicture: PropTypes.string.isRequired,
 //   playerName: PropTypes.string.isRequired,

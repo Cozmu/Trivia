@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 class Login extends React.Component {
@@ -17,6 +18,16 @@ class Login extends React.Component {
         disabled: (email.length > 0 && name.length > 0),
       });
     });
+  };
+
+  fetchToken = () => {
+    fetch('https://opentdb.com/api_token.php?command=request')
+      .then((response) => response.json())
+      .then((data) => {
+        localStorage.setItem('token', data.token);
+        const { history } = this.props;
+        history.push('/game');
+      });
   };
 
   render() {
@@ -49,13 +60,37 @@ class Login extends React.Component {
           disabled={ !disabled }
           data-testid="btn-play"
           type="button"
+
+          onClick={ this.fetchToken }
+
         >
           Play
 
         </button>
+        <p>
+          <button
+            type="button"
+            data-testid="btn-settings"
+            onClick={ () => {
+              const { history } = this.props;
+              history.push('/config');
+            } }
+          >
+            Configurações
+
+          </button>
+
+        </p>
       </main>
+
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Login;
