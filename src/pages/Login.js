@@ -45,7 +45,14 @@ class Login extends React.Component {
             onChange={ this.handleInput }
           />
         </label>
-        <button disabled={ !disabled } data-testid="btn-play" type="button">Play</button>
+        <button
+          disabled={ !disabled }
+          data-testid="btn-play"
+          type="button"
+        >
+          Play
+
+        </button>
       </main>
     );
   }
