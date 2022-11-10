@@ -5,6 +5,11 @@ import Header from '../components/Header';
 import { fetchQuestion } from '../redux/actions/index';
 
 class Game extends React.Component {
+  state = {
+    // indexQuestion: 0,
+    arrayOfAnswers: [],
+  };
+
   componentDidMount() {
     const { dispatch } = this.props;
     const storage = localStorage.getItem('token');
@@ -18,8 +23,44 @@ class Game extends React.Component {
       });
   }
 
+  shuffle = (question, index) => {
+    const correctAnswers = { answers: question[index].correct_answer, value: true };
+    const incorrectAnswers = question[index].incorrect_answers
+      .map((e) => ({ answers: e, value: false }));
+    const answers = [correctAnswers, ...incorrectAnswers];
+    console.log(answers);
+    // const animais = ['macaco', 'leao', 'sapo', 'girafa'];
+    // const shuffledArray = [];
+    // const usedIndexes = [];
+    // let i = 0;
+    // while (i < animais.length) {
+    //   const randomNumber = Math.floor(Math.random() * animais.length);
+    //   if (!usedIndexes.includes(animais[randomNumber])) {
+    //     shuffledArray.push(animais[randomNumber]);
+    //     usedIndexes.push(randomNumber);
+    //     i += 1;
+    //   }
+    // }
+    // console.log(animais);
+    // console.log(shuffledArray);
+
+    // for (let i = answers.length - 1; i > 0; i -= 1) {
+    //   const answerRandom = Math.floor(Math.random() * (i + 1));
+    //   const temp = answers[i];
+    //   answers[i] = answers[answerRandom];
+    //   answers[answerRandom] = temp;
+    //   console.log(answers);
+    //   this.setState({ arrayOfAnswers: answers });
+    // }
+    const meio = 0.5;
+    const answerRandom = answers.sort(() => Math.random() - meio);
+    this.setState({ arrayOfAnswers: answerRandom });
+  };
+
   render() {
     const { results, isLoading } = this.props;
+    const { arrayOfAnswers } = this.state;
+    console.log(arrayOfAnswers);
     return (
       <main>
         <Header />
@@ -36,13 +77,22 @@ class Game extends React.Component {
               >
                 {results[0].question}
               </p>
+              <button
+                type="button"
+                onClick={ () => this.shuffle(results, 0) }
+              >
+                sim
+              </button>
               <section data-testid="answer-options">
-                <button
-                  type="button"
-                  data-testid="correct-answer"
-                >
-                  {}
-                </button>
+                {arrayOfAnswers.map((e, i) => (
+                  <button
+                    key={ i }
+                    type="button"
+                    data-testid={ e.value ? 'correct-answer' : `wrong-answer${i}` }
+                  >
+                    {e.value ? e.answers : e.answers}
+                  </button>
+                ))}
               </section>
             </div>)}
       </main>
