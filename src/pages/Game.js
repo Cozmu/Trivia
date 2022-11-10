@@ -7,7 +7,6 @@ import { fetchQuestion } from '../redux/actions/index';
 class Game extends React.Component {
   state = {
     indexQuestion: 0,
-    arrayOfAnswers: [],
   };
 
   componentDidMount() {
@@ -27,22 +26,27 @@ class Game extends React.Component {
     const meio = 0.5;
     const answers = [question[index].correct_answer,
       ...question[index].incorrect_answers];
-    console.log(answers);
-    const arrAnimais = answers.sort(() => Math.random() - meio);
-    console.log(arrAnimais);
-    const answerRandom = arrAnimais.map((e) => {
+    const random = answers.sort(() => Math.random() - meio);
+    const answerRandom = random.map((e) => {
       if (e === question[index].correct_answer) {
         return { answers: e, value: true };
       }
       return { answers: e, value: false };
     });
-    this.setState({ arrayOfAnswers: answerRandom });
+    return answerRandom.map((e, i) => (
+      <button
+        key={ i }
+        type="button"
+        data-testid={ e.value ? 'correct-answer' : `wrong-answer${i}` }
+      >
+        {e.value ? e.answers : e.answers}
+      </button>
+    ));
   };
 
   render() {
     const { results, isLoading } = this.props;
-    const { arrayOfAnswers, indexQuestion } = this.state;
-    console.log(arrayOfAnswers);
+    const { indexQuestion } = this.state;
     return (
       <main>
         <Header />
@@ -59,22 +63,8 @@ class Game extends React.Component {
               >
                 {results[0].question}
               </p>
-              <button
-                type="button"
-                onClick={ () => this.shuffle(results, indexQuestion) }
-              >
-                sim
-              </button>
               <section data-testid="answer-options">
-                {arrayOfAnswers.map((e, i) => (
-                  <button
-                    key={ i }
-                    type="button"
-                    data-testid={ e.value ? 'correct-answer' : `wrong-answer${i}` }
-                  >
-                    {e.value ? e.answers : e.answers}
-                  </button>
-                ))}
+                {this.shuffle(results, indexQuestion)}
               </section>
             </div>)}
       </main>
