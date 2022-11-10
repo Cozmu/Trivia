@@ -60,7 +60,9 @@ class Login extends React.Component {
           disabled={ !disabled }
           data-testid="btn-play"
           type="button"
+
           onClick={ this.fetchToken }
+
         >
           Play
 
