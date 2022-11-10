@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { saveNameAndEmail } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -24,9 +26,11 @@ class Login extends React.Component {
     fetch('https://opentdb.com/api_token.php?command=request')
       .then((response) => response.json())
       .then((data) => {
+        const { email, name } = this.state;
+        const { dispatch, history } = this.props;
         localStorage.setItem('token', data.token);
-        const { history } = this.props;
         history.push('/game');
+        dispatch(saveNameAndEmail(name, email));
       });
   };
 
@@ -60,7 +64,6 @@ class Login extends React.Component {
           disabled={ !disabled }
           data-testid="btn-play"
           type="button"
-
           onClick={ this.fetchToken }
 
         >
@@ -91,6 +94,12 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default Login;
+// const mapStateToProps = (store) => ({
+//   gravatarEmail: store.player.gravatarEmail,
+//   name: store.player.name,
+// });
+
+export default connect()(Login);

@@ -21,3 +21,11 @@ export const fetchQuestion = (token) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const SAVE_NAME_AND_EMAIL = 'SAVE_NAME_AND_EMAIL';
+
+export const saveNameAndEmail = (name, gravatarEmail) => ({
+  type: SAVE_NAME_AND_EMAIL,
+  name,
+  gravatarEmail,
+});
