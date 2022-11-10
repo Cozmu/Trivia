@@ -29,29 +29,6 @@ class Game extends React.Component {
       .map((e) => ({ answers: e, value: false }));
     const answers = [correctAnswers, ...incorrectAnswers];
     console.log(answers);
-    // const animais = ['macaco', 'leao', 'sapo', 'girafa'];
-    // const shuffledArray = [];
-    // const usedIndexes = [];
-    // let i = 0;
-    // while (i < animais.length) {
-    //   const randomNumber = Math.floor(Math.random() * animais.length);
-    //   if (!usedIndexes.includes(animais[randomNumber])) {
-    //     shuffledArray.push(animais[randomNumber]);
-    //     usedIndexes.push(randomNumber);
-    //     i += 1;
-    //   }
-    // }
-    // console.log(animais);
-    // console.log(shuffledArray);
-
-    // for (let i = answers.length - 1; i > 0; i -= 1) {
-    //   const answerRandom = Math.floor(Math.random() * (i + 1));
-    //   const temp = answers[i];
-    //   answers[i] = answers[answerRandom];
-    //   answers[answerRandom] = temp;
-    //   console.log(answers);
-    //   this.setState({ arrayOfAnswers: answers });
-    // }
     const meio = 0.5;
     const answerRandom = answers.sort(() => Math.random() - meio);
     this.setState({ arrayOfAnswers: answerRandom });
