@@ -6,6 +6,7 @@ import { fetchQuestion } from '../redux/actions/index';
 
 class Game extends React.Component {
   state = {
+    isLoading: true,
     indexQuestion: 0,
   };
 
@@ -14,6 +15,7 @@ class Game extends React.Component {
     const storage = localStorage.getItem('token');
     dispatch(fetchQuestion(storage))
       .then(() => {
+        this.setState({ isLoading: false });
         const ERROR = 3;
         const { history, responseCode } = this.props;
         if (responseCode === ERROR) {
@@ -45,8 +47,8 @@ class Game extends React.Component {
   };
 
   render() {
-    const { results, isLoading } = this.props;
-    const { indexQuestion } = this.state;
+    const { results } = this.props;
+    const { indexQuestion, isLoading } = this.state;
     return (
       <main>
         <Header />
@@ -56,12 +58,12 @@ class Game extends React.Component {
               <p
                 data-testid="question-category"
               >
-                {results[0].category}
+                {results[indexQuestion].category}
               </p>
               <p
                 data-testid="question-text"
               >
-                {results[0].question}
+                {results[indexQuestion].question}
               </p>
               <section data-testid="answer-options">
                 {this.shuffle(results, indexQuestion)}
@@ -75,7 +77,7 @@ class Game extends React.Component {
 const mapStateToProps = (state) => ({
   responseCode: state.questions.responseCode,
   results: state.questions.results,
-  isLoading: state.questions.isLoading,
+  // isLoading: state.questions.isLoading,
 });
 
 Game.propTypes = {
