@@ -4,6 +4,16 @@ import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 
 class Header extends React.Component {
+  state = {
+    img: '',
+  };
+
+  componentDidMount() {
+    this.setState({
+      img: this.gravatarImg(),
+    });
+  }
+
   gravatarImg = () => {
     const { gravatarEmail } = this.props;
     const hash = md5(gravatarEmail).toString();
@@ -11,12 +21,13 @@ class Header extends React.Component {
   };
 
   render() {
+    const { img } = this.state;
     const { name, score } = this.props;
     return (
       <header>
         <img
           data-testid="header-profile-picture"
-          src={ this.gravatarImg }
+          src={ img }
           alt=""
         />
         <h3

@@ -27,11 +27,10 @@ class Login extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         const { email, name } = this.state;
-        const { dispatch } = this.props;
+        const { dispatch, history } = this.props;
         localStorage.setItem('token', data.token);
-        const { history } = this.props;
         history.push('/game');
-        dispatch(saveNameAndEmail(email, name));
+        dispatch(saveNameAndEmail(name, email));
       });
   };
 
@@ -95,7 +94,7 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  dispatch: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 // const mapStateToProps = (store) => ({
@@ -103,4 +102,4 @@ Login.propTypes = {
 //   name: store.player.name,
 // });
 
-export default connect(mapStateToProps)(Login);
+export default connect()(Login);
