@@ -38,3 +38,8 @@ export const hitTime = (time) => ({
   type: HIT_TIME,
   time,
 });
+
+// export const NEXT_QUESTION = 'NEXT_QUESTION';
+// export const nextQuestion = () => ({
+
+// });
