@@ -10,13 +10,11 @@ class RedirectButton extends React.Component {
         type="button"
         data-testid={ dataTestId }
         onClick={ () => {
-          console.log(redirectPage);
           history.push(`${redirectPage}`);
         } }
       >
         {text}
       </button>
-
     );
   }
 }

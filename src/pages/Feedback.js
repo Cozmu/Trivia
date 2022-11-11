@@ -1,15 +1,33 @@
+import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import setLocalStorage from '../services/setLocalStorage';
 
 class Feedback extends React.Component {
+  componentDidMount() {
+    const { name, score } = this.props;
+    const newPlayer = {
+      img: this.gravatarImg(),
+      score,
+      name,
+    };
+    setLocalStorage(newPlayer);
+  }
+
+  gravatarImg = () => {
+    const { gravatarEmail } = this.props;
+    const hash = md5(gravatarEmail).toString();
+    return `https://www.gravatar.com/avatar/${hash}`;
+  };
+
   render() {
-    const { assertions, score } = this.props;
+    const { assertions, score, history } = this.props;
     const THREE = 3;
     return (
       <div>
-        <Header />
+        <Header history={ history } />
         <h1
           data-testid="feedback-total-question"
         >
