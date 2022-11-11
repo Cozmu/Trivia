@@ -1,8 +1,9 @@
+import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React from 'react';
-import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import Cronometro from './Cronometro';
+import RedirectButton from './RedirectButton';
 
 class Header extends React.Component {
   state = {
@@ -23,7 +24,7 @@ class Header extends React.Component {
 
   render() {
     const { img } = this.state;
-    const { name, score } = this.props;
+    const { name, score, history } = this.props;
     return (
       <header>
         <img
@@ -43,6 +44,18 @@ class Header extends React.Component {
           {score}
         </h3>
         <Cronometro />
+        <RedirectButton
+          dataTestId="btn-play-again"
+          redirectPage="/"
+          text="Play Again"
+          history={ history }
+        />
+        <RedirectButton
+          dataTestId="btn-ranking"
+          redirectPage="/ranking"
+          text="Ranking"
+          history={ history }
+        />
       </header>
     );
   }
