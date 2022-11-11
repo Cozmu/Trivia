@@ -9,7 +9,6 @@ class Game extends React.Component {
     isLoading: true,
     indexQuestion: 0,
     buttoncolor: false,
-    // isDisabled: true,
   };
 
   componentDidMount() {
@@ -17,10 +16,8 @@ class Game extends React.Component {
     const storage = localStorage.getItem('token');
     dispatch(fetchQuestion(storage))
       .then(() => {
-        console.log('esperou');
         const ERROR = 3;
         const { history, responseCode } = this.props;
-        console.log(responseCode);
         if (responseCode === ERROR) {
           history.push('/');
           localStorage.removeItem('token');
@@ -58,7 +55,7 @@ class Game extends React.Component {
   };
 
   render() {
-    const { results } = this.props;
+    const { results, isDisabled } = this.props;
     const { indexQuestion, isLoading } = this.state;
     return (
       <main>
@@ -82,7 +79,7 @@ class Game extends React.Component {
                   <button
                     className={ this.handleColor(value) }
                     onClick={ this.revealAnswer }
-                    // disabled={ isDisabled }
+                    disabled={ isDisabled }
                     key={ i }
                     type="button"
                     data-testid={ value ? 'correct-answer' : `wrong-answer${i}` }
@@ -96,12 +93,15 @@ class Game extends React.Component {
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   responseCode: state.questions.responseCode,
   results: state.questions.results,
-  // isLoading: state.questions.isLoading,
+  isDisabled: state.questions.isDisabled,
 });
+
 Game.propTypes = {
   dispatch: PropTypes.func,
 }.isRequired;
+
 export default connect(mapStateToProps)(Game);

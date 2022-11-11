@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
+import Cronometro from './Cronometro';
 
 class Header extends React.Component {
   state = {
@@ -39,9 +40,11 @@ class Header extends React.Component {
         <h3
           data-testid="header-score"
         >
+          Score:
           {score}
 
         </h3>
+        <Cronometro />
       </header>
     );
   }
