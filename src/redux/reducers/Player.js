@@ -6,7 +6,7 @@ import {
 const INITIAL_STATE = {
   name: '',
   assertions: '',
-  score: 0,
+  score: 1,
   gravatarEmail: '',
   correct: false, // mudar esse estado quando for a prox pergunta
   difficulty: '',
@@ -25,9 +25,12 @@ const computingPoints = (previousPoints, difficulty, time) => {
   if (difficulty === 'easy') {
     difficultyPoints += 1;
   }
+  console.log(typeof difficultyPoints);
   const soma = TEN + (time * difficultyPoints);
-
-  return previousPoints + soma;
+  const x = previousPoints + soma;
+  console.log(typeof previousPoints);
+  console.log(typeof x);
+  return x;
 };
 
 function player(state = INITIAL_STATE, action) {

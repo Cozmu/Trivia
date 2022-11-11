@@ -41,7 +41,6 @@ class Header extends React.Component {
           data-testid="header-score"
         >
           {score}
-
         </h3>
         <Cronometro />
       </header>
