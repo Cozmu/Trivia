@@ -4,10 +4,10 @@ import {
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
-  correct: false, // mudar esse estado quando for a prox pergunta
+  correct: false,
 };
 
 const computingPoints = (previousPoints, difficulty, time) => {
@@ -42,6 +42,7 @@ function player(state = INITIAL_STATE, action) {
       ...state,
       correct: true,
       score: computingPoints(state.score, action.difficulty, action.time),
+      assertions: state.assertions + 1,
     };
   default:
     return state;
