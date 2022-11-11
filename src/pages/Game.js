@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { fetchQuestion, rightAnswer, timesUp } from '../redux/actions/index';
+import { fetchQuestion, rightAnswer,
+  timesUp, nextQuestion } from '../redux/actions/index';
 import Cronometro from '../components/Cronometro';
 
 class Game extends React.Component {
@@ -58,6 +59,9 @@ class Game extends React.Component {
     this.setState({ buttoncolor: true });
     if (correto) {
       dispatch(rightAnswer(dificuldade, contador));
+      dispatch(nextQuestion());
+    } else {
+      dispatch(nextQuestion());
     }
   };
 
@@ -84,7 +88,7 @@ class Game extends React.Component {
   };
 
   render() {
-    const { results, isDisabled, history } = this.props;
+    const { results, isDisabled, history, proxPergunta } = this.props;
     const { indexQuestion, isLoading, perguntas, contador } = this.state;
     return (
       <main>
@@ -118,22 +122,37 @@ class Game extends React.Component {
                   </button>
                 ))}
               </section>
-              {}
+              {proxPergunta && (
+                <button
+                  type="button"
+                  data-testid="btn-next"
+                >
+                  Next Question
+                </button>
+              )}
             </div>)}
       </main>
     );
   }
 }
 
+Game.propTypes = {
+  correct: PropTypes.any,
+  dispatch: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  isDisabled: PropTypes.any,
+  responseCode: PropTypes.any,
+  results: PropTypes.any,
+}.isRequired;
+
 const mapStateToProps = (state) => ({
   responseCode: state.questions.responseCode,
   results: state.questions.results,
   isDisabled: state.questions.isDisabled,
   correct: state.player.correct,
+  proxPergunta: state.questions.proxPergunta,
 });
-
-Game.propTypes = {
-  dispatch: PropTypes.func,
-}.isRequired;
 
 export default connect(mapStateToProps)(Game);

@@ -34,7 +34,7 @@ export const rightAnswer = (difficulty, time) => ({
   time,
 });
 
-// export const NEXT_QUESTION = 'NEXT_QUESTION';
-// export const nextQuestion = () => ({
-
-// });
+export const NEXT_QUESTION = 'NEXT_QUESTION';
+export const nextQuestion = () => ({
+  type: NEXT_QUESTION,
+});

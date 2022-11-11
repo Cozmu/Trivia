@@ -1,6 +1,5 @@
 import {
   RIGHT_ANSWER,
-  // NEXT_QUESTION,
   SAVE_NAME_AND_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
@@ -9,7 +8,6 @@ const INITIAL_STATE = {
   score: 0,
   gravatarEmail: '',
   correct: false, // mudar esse estado quando for a prox pergunta
-  nextQuestion: false,
 };
 
 const computingPoints = (previousPoints, difficulty, time) => {
@@ -45,11 +43,6 @@ function player(state = INITIAL_STATE, action) {
       correct: true,
       score: computingPoints(state.score, action.difficulty, action.time),
     };
-  // case NEXT_QUESTION:
-  //   return {
-  //     ...state,
-  //     nextQuestion:
-  //   };
   default:
     return state;
   }

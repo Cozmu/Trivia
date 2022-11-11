@@ -1,12 +1,14 @@
 import {
   REQUEST_QUESTION_SUCCESS,
   TIMES_UP,
+  NEXT_QUESTION,
 } from '../actions/index';
 
 const initionState = {
   responseCode: '',
   results: [],
   isDisabled: false,
+  proxPergunta: false,
 };
 
 const questions = (state = initionState, action) => {
@@ -21,8 +23,13 @@ const questions = (state = initionState, action) => {
     return {
       ...state,
       isDisabled: true,
+      nextQuestion: true,
     };
-
+  case NEXT_QUESTION:
+    return {
+      ...state,
+      proxPergunta: true,
+    };
   default:
     return state;
   }
