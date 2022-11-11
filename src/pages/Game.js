@@ -42,8 +42,8 @@ class Game extends React.Component {
     }), () => {
       const { indexQuestion } = this.state;
       const { results, history, dispatch } = this.props;
-      const FIVE = 4;
-      if (indexQuestion > FIVE) {
+      const FOUR = 4;
+      if (indexQuestion > FOUR) {
         history.push('/feedback');
       }
       this.counter();
