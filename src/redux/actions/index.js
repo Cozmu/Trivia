@@ -1,7 +1,6 @@
 import triviaQuestion from '../../services/perguntasAPI';
 
 export const REQUEST_QUESTION_SUCCESS = 'REQUEST_QUESTION_SUCCESS';
-
 export const requestQuestionSuccess = (payload) => ({
   type: REQUEST_QUESTION_SUCCESS,
   payload,
@@ -17,7 +16,6 @@ export const fetchQuestion = (token) => async (dispatch) => {
 };
 
 export const SAVE_NAME_AND_EMAIL = 'SAVE_NAME_AND_EMAIL';
-
 export const saveNameAndEmail = (name, gravatarEmail) => ({
   type: SAVE_NAME_AND_EMAIL,
   name,
@@ -25,7 +23,18 @@ export const saveNameAndEmail = (name, gravatarEmail) => ({
 });
 
 export const TIMES_UP = 'TIMES_UP';
-
 export const timesUp = () => ({
   type: TIMES_UP,
+});
+
+export const RIGHT_ANSWER = 'RIGHT_ANSWER';
+export const rightAnswer = (difficulty) => ({
+  type: RIGHT_ANSWER,
+  difficulty,
+});
+
+export const HIT_TIME = 'HIT_TIME';
+export const hitTime = (time) => ({
+  type: HIT_TIME,
+  time,
 });

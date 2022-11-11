@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { fetchQuestion } from '../redux/actions/index';
+import { fetchQuestion, rightAnswer } from '../redux/actions/index';
 
 class Game extends React.Component {
   state = {
@@ -27,8 +27,12 @@ class Game extends React.Component {
       });
   }
 
-  revealAnswer = () => {
+  revealAnswer = (correto, dificuldade) => {
+    const { dispatch } = this.props;
     this.setState({ buttoncolor: true });
+    if (correto) {
+      dispatch(rightAnswer(dificuldade));
+    }
   };
 
   handleColor = (value) => {
@@ -46,11 +50,10 @@ class Game extends React.Component {
     const random = answers.sort(() => Math.random() - meio);
     const answerRandom = random.map((e) => {
       if (e === question[index].correct_answer) {
-        return { answers: e, value: true };
+        return { answers: e, value: true, difficulty: question[index].difficulty };
       }
-      return { answers: e, value: false };
+      return { answers: e, value: false, difficulty: question[index].difficulty };
     });
-
     return answerRandom;
   };
 
@@ -75,18 +78,19 @@ class Game extends React.Component {
               </p>
               <section data-testid="answer-options">
                 { results.length !== 0
-                && this.shuffle(results, indexQuestion).map(({ answers, value }, i) => (
-                  <button
-                    className={ this.handleColor(value) }
-                    onClick={ this.revealAnswer }
-                    disabled={ isDisabled }
-                    key={ i }
-                    type="button"
-                    data-testid={ value ? 'correct-answer' : `wrong-answer${i}` }
-                  >
-                    { answers }
-                  </button>
-                ))}
+                && this.shuffle(results, indexQuestion)
+                  .map(({ answers, value, difficulty }, i) => (
+                    <button
+                      className={ this.handleColor(value) }
+                      onClick={ () => this.revealAnswer(value, difficulty) }
+                      disabled={ isDisabled }
+                      key={ i }
+                      type="button"
+                      data-testid={ value ? 'correct-answer' : `wrong-answer${i}` }
+                    >
+                      { answers }
+                    </button>
+                  ))}
               </section>
             </div>)}
       </main>

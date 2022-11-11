@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { timesUp } from '../redux/actions/index';
+import { timesUp, hitTime } from '../redux/actions/index';
 
 class Cronometro extends React.Component {
   state = {
@@ -12,7 +12,6 @@ class Cronometro extends React.Component {
     const FIVE_SECONDS = 5000;
     setTimeout(() => {
       this.counter();
-      console.log('uma vez');
     }, FIVE_SECONDS);
   }
 
@@ -23,7 +22,11 @@ class Cronometro extends React.Component {
         contador: prev.contador - 1,
       }), () => {
         const { contador } = this.state;
-        const { dispatch } = this.props;
+        const { dispatch, correct } = this.props;
+        if (correct) {
+          clearInterval(tempo);
+          dispatch(hitTime(contador));
+        }
         if (contador === 0) {
           clearInterval(tempo);
           dispatch(timesUp());
@@ -44,8 +47,12 @@ class Cronometro extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  correct: state.player.correct,
+});
+
 Cronometro.propTypes = {
   dispatch: PropTypes.func,
 }.isRequired;
 
-export default connect()(Cronometro);
+export default connect(mapStateToProps)(Cronometro);
