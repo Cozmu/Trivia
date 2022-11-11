@@ -28,14 +28,9 @@ export const timesUp = () => ({
 });
 
 export const RIGHT_ANSWER = 'RIGHT_ANSWER';
-export const rightAnswer = (difficulty) => ({
+export const rightAnswer = (difficulty, time) => ({
   type: RIGHT_ANSWER,
   difficulty,
-});
-
-export const HIT_TIME = 'HIT_TIME';
-export const hitTime = (time) => ({
-  type: HIT_TIME,
   time,
 });
 
