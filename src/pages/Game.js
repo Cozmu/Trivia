@@ -9,6 +9,8 @@ class Game extends React.Component {
     isLoading: true,
     indexQuestion: 0,
     buttoncolor: false,
+    isDisabled: true,
+    toggle: false,
   };
 
   async componentDidMount() {
@@ -51,22 +53,13 @@ class Game extends React.Component {
       }
       return { answers: e, value: false };
     });
-    return answerRandom.map((e, i) => (
-      <button
-        className={ this.handleColor(e.value) }
-        onClick={ this.revealAnswer }
-        key={ i }
-        type="button"
-        data-testid={ e.value ? 'correct-answer' : `wrong-answer${i}` }
-      >
-        { e.answers}
-      </button>
-    ));
+
+    return answerRandom;
   };
 
   render() {
     const { results } = this.props;
-    const { indexQuestion, isLoading } = this.state;
+    const { indexQuestion, isLoading, isDisabled } = this.state;
     return (
       <main>
         <Header />
@@ -84,7 +77,18 @@ class Game extends React.Component {
                 {results[indexQuestion].question}
               </p>
               <section data-testid="answer-options">
-                {this.shuffle(results, indexQuestion)}
+                {this.shuffle(results, indexQuestion).map(({ answers, value }, i) => (
+                  <button
+                    className={ this.handleColor(value) }
+                    onClick={ this.revealAnswer }
+                    // disabled={ isDisabled }
+                    key={ i }
+                    type="button"
+                    data-testid={ value ? 'correct-answer' : `wrong-answer${i}` }
+                  >
+                    { answers }
+                  </button>
+                ))}
               </section>
             </div>)}
       </main>

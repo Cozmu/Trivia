@@ -46,11 +46,12 @@ class Header extends React.Component {
     );
   }
 }
+
 Header.propTypes = {
-  gravatarEmail: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  score: PropTypes.string.isRequired,
-};
+  gravatarEmail: PropTypes.any,
+  name: PropTypes.any,
+  score: PropTypes.any,
+}.isRequired;
 
 const mapStateToProps = (store) => ({
   gravatarEmail: store.player.gravatarEmail,
