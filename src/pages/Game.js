@@ -92,6 +92,7 @@ class Game extends React.Component {
                     </button>
                   ))}
               </section>
+              {}
             </div>)}
       </main>
     );

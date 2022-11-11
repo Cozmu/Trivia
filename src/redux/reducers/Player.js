@@ -1,15 +1,17 @@
 import {
   HIT_TIME,
   RIGHT_ANSWER,
+  // NEXT_QUESTION,
   SAVE_NAME_AND_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
   assertions: '',
-  score: 1,
+  score: 0,
   gravatarEmail: '',
   correct: false, // mudar esse estado quando for a prox pergunta
   difficulty: '',
+  nextQuestion: false,
 };
 
 const computingPoints = (previousPoints, difficulty, time) => {
@@ -25,11 +27,9 @@ const computingPoints = (previousPoints, difficulty, time) => {
   if (difficulty === 'easy') {
     difficultyPoints += 1;
   }
-  console.log(typeof difficultyPoints);
   const soma = TEN + (time * difficultyPoints);
   const x = previousPoints + soma;
-  console.log(typeof previousPoints);
-  console.log(typeof x);
+
   return x;
 };
 
@@ -52,6 +52,11 @@ function player(state = INITIAL_STATE, action) {
       ...state,
       score: computingPoints(state.score, state.difficulty, action.time),
     };
+  // case NEXT_QUESTION:
+  //   return {
+  //     ...state,
+  //     nextQuestion:
+  //   };
   default:
     return state;
   }
