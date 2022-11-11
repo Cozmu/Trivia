@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { fetchQuestion } from '../redux/actions/index';
+import { fetchQuestion, rightAnswer } from '../redux/actions/index';
 
 class Game extends React.Component {
   state = {
@@ -11,25 +11,28 @@ class Game extends React.Component {
     buttoncolor: false,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { dispatch } = this.props;
     const storage = localStorage.getItem('token');
-    const x = await fetchQuestion(storage);
-    dispatch(x)
+    dispatch(fetchQuestion(storage))
       .then(() => {
         const ERROR = 3;
         const { history, responseCode } = this.props;
         if (responseCode === ERROR) {
           history.push('/');
-        }
-        if (x) {
+          localStorage.removeItem('token');
+        } else {
           this.setState({ isLoading: false });
         }
       });
   }
 
-  revealAnswer = () => {
+  revealAnswer = (correto, dificuldade) => {
+    const { dispatch } = this.props;
     this.setState({ buttoncolor: true });
+    if (correto) {
+      dispatch(rightAnswer(dificuldade));
+    }
   };
 
   handleColor = (value) => {
@@ -47,25 +50,15 @@ class Game extends React.Component {
     const random = answers.sort(() => Math.random() - meio);
     const answerRandom = random.map((e) => {
       if (e === question[index].correct_answer) {
-        return { answers: e, value: true };
+        return { answers: e, value: true, difficulty: question[index].difficulty };
       }
-      return { answers: e, value: false };
+      return { answers: e, value: false, difficulty: question[index].difficulty };
     });
-    return answerRandom.map((e, i) => (
-      <button
-        className={ this.handleColor(e.value) }
-        onClick={ this.revealAnswer }
-        key={ i }
-        type="button"
-        data-testid={ e.value ? 'correct-answer' : `wrong-answer${i}` }
-      >
-        { e.answers}
-      </button>
-    ));
+    return answerRandom;
   };
 
   render() {
-    const { results } = this.props;
+    const { results, isDisabled } = this.props;
     const { indexQuestion, isLoading } = this.state;
     return (
       <main>
@@ -76,27 +69,43 @@ class Game extends React.Component {
               <p
                 data-testid="question-category"
               >
-                {results[indexQuestion].category}
+                {results[indexQuestion]?.category}
               </p>
               <p
                 data-testid="question-text"
               >
-                {results[indexQuestion].question}
+                {results[indexQuestion]?.question}
               </p>
               <section data-testid="answer-options">
-                {this.shuffle(results, indexQuestion)}
+                { results.length !== 0
+                && this.shuffle(results, indexQuestion)
+                  .map(({ answers, value, difficulty }, i) => (
+                    <button
+                      className={ this.handleColor(value) }
+                      onClick={ () => this.revealAnswer(value, difficulty) }
+                      disabled={ isDisabled }
+                      key={ i }
+                      type="button"
+                      data-testid={ value ? 'correct-answer' : `wrong-answer${i}` }
+                    >
+                      { answers }
+                    </button>
+                  ))}
               </section>
             </div>)}
       </main>
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   responseCode: state.questions.responseCode,
   results: state.questions.results,
-  // isLoading: state.questions.isLoading,
+  isDisabled: state.questions.isDisabled,
 });
+
 Game.propTypes = {
   dispatch: PropTypes.func,
 }.isRequired;
+
 export default connect(mapStateToProps)(Game);

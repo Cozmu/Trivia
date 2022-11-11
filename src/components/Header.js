@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
+import Cronometro from './Cronometro';
 
 class Header extends React.Component {
   state = {
@@ -40,17 +41,18 @@ class Header extends React.Component {
           data-testid="header-score"
         >
           {score}
-
         </h3>
+        <Cronometro />
       </header>
     );
   }
 }
+
 Header.propTypes = {
-  gravatarEmail: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  score: PropTypes.string.isRequired,
-};
+  gravatarEmail: PropTypes.any,
+  name: PropTypes.any,
+  score: PropTypes.any,
+}.isRequired;
 
 const mapStateToProps = (store) => ({
   gravatarEmail: store.player.gravatarEmail,

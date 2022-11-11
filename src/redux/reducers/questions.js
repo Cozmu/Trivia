@@ -1,26 +1,26 @@
 import {
   REQUEST_QUESTION_SUCCESS,
-  // REQUEST_QUESTION,
+  TIMES_UP,
 } from '../actions/index';
 
 const initionState = {
   responseCode: '',
   results: [],
+  isDisabled: false,
 };
 
 const questions = (state = initionState, action) => {
   switch (action.type) {
-  // case REQUEST_QUESTION:
-  //   return {
-  //     ...state,
-  //     isLoading: true,
-  //   };
   case REQUEST_QUESTION_SUCCESS:
     return {
       ...state,
       responseCode: action.payload.response_code,
       results: [...action.payload.results],
-      // isLoading: false,
+    };
+  case TIMES_UP:
+    return {
+      ...state,
+      isDisabled: true,
     };
 
   default:
