@@ -22,9 +22,6 @@ class Feedback extends React.Component {
 }
 
 Feedback.propTypes = {
-  gravatarEmail: PropTypes.any,
-  name: PropTypes.any,
-  score: PropTypes.any,
   assertions: PropTypes.any,
 }.isRequired;
 

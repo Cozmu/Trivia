@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { fetchQuestion, rightAnswer,
-  timesUp, nextQuestion } from '../redux/actions/index';
+  timesUp, following, nextQuestion } from '../redux/actions/index';
 import Cronometro from '../components/Cronometro';
 
 class Game extends React.Component {
@@ -34,6 +34,24 @@ class Game extends React.Component {
       });
   }
 
+  following = () => {
+    this.setState((prev) => ({
+      indexQuestion: prev.indexQuestion + 1,
+      contador: 30,
+      buttoncolor: false,
+    }), () => {
+      const { indexQuestion } = this.state;
+      const { results, history, dispatch } = this.props;
+      const FIVE = 4;
+      if (indexQuestion > FIVE) {
+        history.push('/feedback');
+      }
+      this.counter();
+      this.shuffle(results, indexQuestion);
+      dispatch(nextQuestion());
+    });
+  };
+
   counter = () => {
     const ONE_SECOND = 1000;
     const tempo = setInterval(() => {
@@ -41,8 +59,11 @@ class Game extends React.Component {
         contador: prev.contador - 1,
       }), () => {
         const { contador } = this.state;
-        const { dispatch, correct } = this.props;
+        const { dispatch, correct, proxPergunta } = this.props;
         if (correct) {
+          clearInterval(tempo);
+        }
+        if (proxPergunta) {
           clearInterval(tempo);
         }
         if (contador === 0) {
@@ -59,10 +80,8 @@ class Game extends React.Component {
     this.setState({ buttoncolor: true });
     if (correto) {
       dispatch(rightAnswer(dificuldade, contador));
-      dispatch(nextQuestion());
-    } else {
-      dispatch(nextQuestion());
     }
+    dispatch(following());
   };
 
   handleColor = (value) => {
@@ -126,6 +145,7 @@ class Game extends React.Component {
                 <button
                   type="button"
                   data-testid="btn-next"
+                  onClick={ this.following }
                 >
                   Next Question
                 </button>

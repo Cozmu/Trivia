@@ -4,10 +4,7 @@ import React from 'react';
 class Cronometro extends React.Component {
   componentDidMount() {
     const { counter } = this.props;
-    const FIVE_SECONDS = 5000;
-    setTimeout(() => {
-      counter();
-    }, FIVE_SECONDS);
+    counter();
   }
 
   render() {
