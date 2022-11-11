@@ -70,20 +70,17 @@ class Login extends React.Component {
           Play
 
         </button>
-        <p>
-          <button
-            type="button"
-            data-testid="btn-settings"
-            onClick={ () => {
-              const { history } = this.props;
-              history.push('/config');
-            } }
-          >
-            Configurações
-
-          </button>
-
-        </p>
+        <br />
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => {
+            const { history } = this.props;
+            history.push('/config');
+          } }
+        >
+          Configurações
+        </button>
       </main>
 
     );
