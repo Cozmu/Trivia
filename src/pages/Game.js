@@ -9,22 +9,22 @@ class Game extends React.Component {
     isLoading: true,
     indexQuestion: 0,
     buttoncolor: false,
-    isDisabled: true,
-    toggle: false,
+    // isDisabled: true,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { dispatch } = this.props;
     const storage = localStorage.getItem('token');
-    const x = await fetchQuestion(storage);
-    dispatch(x)
+    dispatch(fetchQuestion(storage))
       .then(() => {
+        console.log('esperou');
         const ERROR = 3;
         const { history, responseCode } = this.props;
+        console.log(responseCode);
         if (responseCode === ERROR) {
           history.push('/');
-        }
-        if (x) {
+          localStorage.removeItem('token');
+        } else {
           this.setState({ isLoading: false });
         }
       });
@@ -59,7 +59,7 @@ class Game extends React.Component {
 
   render() {
     const { results } = this.props;
-    const { indexQuestion, isLoading, isDisabled } = this.state;
+    const { indexQuestion, isLoading } = this.state;
     return (
       <main>
         <Header />
@@ -69,15 +69,16 @@ class Game extends React.Component {
               <p
                 data-testid="question-category"
               >
-                {results[indexQuestion].category}
+                {results[indexQuestion]?.category}
               </p>
               <p
                 data-testid="question-text"
               >
-                {results[indexQuestion].question}
+                {results[indexQuestion]?.question}
               </p>
               <section data-testid="answer-options">
-                {this.shuffle(results, indexQuestion).map(({ answers, value }, i) => (
+                { results.length !== 0
+                && this.shuffle(results, indexQuestion).map(({ answers, value }, i) => (
                   <button
                     className={ this.handleColor(value) }
                     onClick={ this.revealAnswer }
