@@ -5,17 +5,28 @@ import Header from '../components/Header';
 
 class Feedback extends React.Component {
   render() {
-    const { assertions } = this.props;
+    const { assertions, score } = this.props;
     const THREE = 3;
     return (
       <div>
         <Header />
+        <h1
+          data-testid="feedback-total-question"
+        >
+          {assertions}
+        </h1>
+        <h1
+          data-testid="feedback-total-score"
+        >
+          {score}
+        </h1>
         <h1
           data-testid="feedback-text"
         >
           {(assertions < THREE) ? 'Could be better...' : 'Well Done!'}
 
         </h1>
+
       </div>
     );
   }
