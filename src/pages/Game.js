@@ -2,13 +2,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { fetchQuestion, rightAnswer } from '../redux/actions/index';
+import { fetchQuestion, rightAnswer, timesUp } from '../redux/actions/index';
+import Cronometro from '../components/Cronometro';
 
 class Game extends React.Component {
   state = {
     isLoading: true,
     indexQuestion: 0,
     buttoncolor: false,
+    perguntas: [],
+    contador: 30,
   };
 
   componentDidMount() {
@@ -22,16 +25,39 @@ class Game extends React.Component {
           history.push('/');
           localStorage.removeItem('token');
         } else {
+          const { indexQuestion } = this.state;
+          const { results } = this.props;
           this.setState({ isLoading: false });
+          this.shuffle(results, indexQuestion);
         }
       });
   }
 
+  counter = () => {
+    const ONE_SECOND = 1000;
+    const tempo = setInterval(() => {
+      this.setState((prev) => ({
+        contador: prev.contador - 1,
+      }), () => {
+        const { contador } = this.state;
+        const { dispatch, correct } = this.props;
+        if (correct) {
+          clearInterval(tempo);
+        }
+        if (contador === 0) {
+          clearInterval(tempo);
+          dispatch(timesUp());
+        }
+      });
+    }, ONE_SECOND);
+  };
+
   revealAnswer = (correto, dificuldade) => {
+    const { contador } = this.state;
     const { dispatch } = this.props;
     this.setState({ buttoncolor: true });
     if (correto) {
-      dispatch(rightAnswer(dificuldade));
+      dispatch(rightAnswer(dificuldade, contador));
     }
   };
 
@@ -54,18 +80,19 @@ class Game extends React.Component {
       }
       return { answers: e, value: false, difficulty: question[index].difficulty };
     });
-    return answerRandom;
+    this.setState({ perguntas: answerRandom });
   };
 
   render() {
-    const { results, isDisabled } = this.props;
-    const { indexQuestion, isLoading } = this.state;
+    const { isDisabled, results } = this.props;
+    const { indexQuestion, isLoading, perguntas, contador } = this.state;
     return (
       <main>
         <Header />
         {isLoading ? <p>Loading ...</p>
           : (
             <div>
+              <Cronometro contador={ contador } counter={ this.counter } />
               <p
                 data-testid="question-category"
               >
@@ -77,20 +104,19 @@ class Game extends React.Component {
                 {results[indexQuestion]?.question}
               </p>
               <section data-testid="answer-options">
-                { results.length !== 0
-                && this.shuffle(results, indexQuestion)
-                  .map(({ answers, value, difficulty }, i) => (
-                    <button
-                      className={ this.handleColor(value) }
-                      onClick={ () => this.revealAnswer(value, difficulty) }
-                      disabled={ isDisabled }
-                      key={ i }
-                      type="button"
-                      data-testid={ value ? 'correct-answer' : `wrong-answer${i}` }
-                    >
-                      { answers }
-                    </button>
-                  ))}
+                { perguntas.length !== 0
+                && perguntas.map(({ answers, value, difficulty }, i) => (
+                  <button
+                    className={ this.handleColor(value) }
+                    onClick={ () => this.revealAnswer(value, difficulty) }
+                    disabled={ isDisabled }
+                    key={ i }
+                    type="button"
+                    data-testid={ value ? 'correct-answer' : `wrong-answer${i}` }
+                  >
+                    { answers }
+                  </button>
+                ))}
               </section>
               {}
             </div>)}
@@ -103,6 +129,7 @@ const mapStateToProps = (state) => ({
   responseCode: state.questions.responseCode,
   results: state.questions.results,
   isDisabled: state.questions.isDisabled,
+  correct: state.player.correct,
 });
 
 Game.propTypes = {
