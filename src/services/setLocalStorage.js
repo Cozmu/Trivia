@@ -1,4 +1,4 @@
-import getLocalStorage from "./getLocalStorage";
+import getLocalStorage from './getLocalStorage';
 
 const setLocalStorage = (newPlayer) => {
   const oldArr = getLocalStorage();

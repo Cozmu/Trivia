@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import RedirectButton from '../components/RedirectButton';
 import getLocalStorage from '../services/getLocalStorage';
@@ -47,5 +48,9 @@ class Ranking extends React.Component {
     );
   }
 }
+
+Ranking.propTypes = {
+  history: PropTypes.shape().isRequired,
+};
 
 export default Ranking;
