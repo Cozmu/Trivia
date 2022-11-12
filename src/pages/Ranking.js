@@ -25,6 +25,7 @@ class Ranking extends React.Component {
     const { ranking } = this.state;
     return (
       <main>
+        <h1 data-testid="ranking-title">Ranking</h1>
         <ol>
           {
             ranking.map((e, index) => {

@@ -93,6 +93,10 @@ class Game extends React.Component {
   };
 
   shuffle = (question, index) => {
+    const FOUR = 4;
+    if (index > FOUR) {
+      return console.log('done');
+    }
     const meio = 0.5;
     const answers = [question[index].correct_answer,
       ...question[index].incorrect_answers];
