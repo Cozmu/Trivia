@@ -6,6 +6,7 @@ import { fetchQuestion, rightAnswer,
   timesUp, following, nextQuestion, defaultCorrect } from '../redux/actions/index';
 import Cronometro from '../components/Cronometro';
 import '../css/Game.css';
+import trybe from '../imgs/trybe.png';
 
 class Game extends React.Component {
   state = {
@@ -169,6 +170,9 @@ class Game extends React.Component {
                 )}
               </div>
             </div>)}
+        <footer className="footer">
+          <img src={ trybe } alt="logo-trybe" />
+        </footer>
       </main>
     );
   }

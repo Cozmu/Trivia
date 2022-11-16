@@ -13,6 +13,7 @@ html, body {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+  height: calc(100vh - 192px);
   justify-content: space-around;
 }
 
@@ -72,4 +73,11 @@ html, body {
 
 .btn-next:active {
   background-color: rgb(42, 172, 125);
+}
+
+.footer {
+  background-color: rgb(60, 27, 122);
+  margin-bottom: 0;
+  padding: 10px;
+  width: 100%;
 }
