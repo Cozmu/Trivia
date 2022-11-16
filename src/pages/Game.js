@@ -46,7 +46,7 @@ class Game extends React.Component {
       if (indexQuestion > FOUR) {
         history.push('/feedback');
       }
-      dispatch(defaultCorrect())
+      dispatch(defaultCorrect());
       this.counter();
       this.shuffle(results, indexQuestion);
       dispatch(nextQuestion());
