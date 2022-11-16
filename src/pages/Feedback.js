@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import setLocalStorage from '../services/setLocalStorage';
+import RedirectButton from '../components/RedirectButton';
 
 class Feedback extends React.Component {
   componentDidMount() {
@@ -27,7 +28,7 @@ class Feedback extends React.Component {
     const THREE = 3;
     return (
       <div>
-        <Header history={ history } />
+        <Header />
         <h1
           data-testid="feedback-total-question"
         >
@@ -44,7 +45,18 @@ class Feedback extends React.Component {
           {(assertions < THREE) ? 'Could be better...' : 'Well Done!'}
 
         </h1>
-
+        <RedirectButton
+          dataTestId="btn-play-again"
+          redirectPage="/"
+          text="Play Again"
+          history={ history }
+        />
+        <RedirectButton
+          dataTestId="btn-ranking"
+          redirectPage="/ranking"
+          text="Ranking"
+          history={ history }
+        />
       </div>
     );
   }
