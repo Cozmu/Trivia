@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, screen } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App';
@@ -36,7 +36,7 @@ const initialState = {
             {
                 category: 'Entertainment: Film',
                 type: 'multiple',
-                difficulty: 'easy',
+                difficulty: 'medium',
                 question: 'Who played the female lead in the 1933 film &quot;King Kong&quot;?',
                 correct_answer: 'Fay Wray',
                 incorrect_answers: [
@@ -48,7 +48,7 @@ const initialState = {
             {
                 category: 'Entertainment: Film',
                 type: 'multiple',
-                difficulty: 'medium',
+                difficulty: 'hard',
                 question: 'In the 1999 movie Fight Club, which of these is not a rule of the &quot;fight club&quot;?',
                 correct_answer: 'Always wear a shirt',
                 incorrect_answers: [
@@ -136,11 +136,58 @@ describe('Testa a página de Game e seus componentes.', () => {
         });
     })
     describe('3. Testa o componente Cronometro na pagina Game.', () => {
-        test('3.1. Testa se renderiza o cronometro com valor inicial "30".', () => {
+        test('3.1. Testa se renderiza o cronometro com valor inicial "30".', async () => {
+            renderWithRouterAndRedux(<Game />, initialState);
+            await screen.findByTestId('question-text')
+            expect(screen.getByTestId('cronometro')).toBeInTheDocument()
+            expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
 
         });
-        test('3.2. ....', () => {
+    })
+    describe('4. Testa as perguntas na pagina Game.', () => {
+        test('4.1. Testa se renderiza certo a primeira pergunta corretamente.', async () => {
+            renderWithRouterAndRedux(<Game />, initialState);
+            expect(await screen.findByTestId('question-text')).toHaveTextContent('What does CPU stand for?')
 
+        });
+        test('4.2. Testa o valor do Score ao clicar na resposta certa fácil, médium e difícil', async () => {
+            renderWithRouterAndRedux(<Game />, initialState);
+            expect(await screen.findByTestId('question-text')).toHaveTextContent('What does CPU stand for?')
+            expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
+            expect(screen.getByTestId('header-score')).toHaveTextContent(0)
+            act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            await waitFor(() => {
+                expect(screen.getByTestId('header-score')).toHaveTextContent(40);
+            });
+        });
+        test('4.2. Testa o valor do Score clicar na resposta certa média.', async () => {
+            renderWithRouterAndRedux(<Game />, initialState);
+            expect(await screen.findByTestId('question-text')).toHaveTextContent('What does CPU stand for?')
+            act(() => userEvent.click(screen.getByTestId('wrong-answer2')))
+            act(() => userEvent.click(screen.getByTestId('btn-next')))
+            expect(await screen.findByTestId('question-text')).toHaveTextContent('Who played the female lead in the 1933 film &quot;King Kong&quot;?')
+            expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
+            expect(screen.getByTestId('header-score')).toHaveTextContent(0)
+            act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            await waitFor(() => {
+                expect(screen.getByTestId('header-score')).toHaveTextContent(70);
+            });
+        });
+        test('4.2. Testa o valor do Score clicar na resposta certa média.', async () => {
+            renderWithRouterAndRedux(<Game />, initialState);
+            expect(await screen.findByTestId('question-text')).toHaveTextContent('What does CPU stand for?')
+            act(() => userEvent.click(screen.getByTestId('wrong-answer2')))
+            act(() => userEvent.click(screen.getByTestId('btn-next')))
+            expect(await screen.findByTestId('question-text')).toHaveTextContent('Who played the female lead in the 1933 film &quot;King Kong&quot;?')
+            act(() => userEvent.click(screen.getByTestId('wrong-answer2')))
+            act(() => userEvent.click(screen.getByTestId('btn-next')))
+            expect(await screen.findByTestId('question-text')).toHaveTextContent('In the 1999 movie Fight Club, which of these is not a rule of the &quot;fight club&quot;?')
+            expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
+            expect(screen.getByTestId('header-score')).toHaveTextContent(0)
+            act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            await waitFor(() => {
+                expect(screen.getByTestId('header-score')).toHaveTextContent(100);
+            });
         });
     })
 })

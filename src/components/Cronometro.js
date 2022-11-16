@@ -11,7 +11,7 @@ class Cronometro extends React.Component {
     const { contador } = this.props;
     return (
       <div>
-        <h3>
+        <h3 data-testid="cronometro">
           {contador}
         </h3>
       </div>
