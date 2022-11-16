@@ -26,19 +26,19 @@ class Ranking extends React.Component {
     return (
       <main>
         <h1 data-testid="ranking-title">Ranking</h1>
-        <ol>
-          {
-            ranking.map((e, index) => {
-              console.log(e);
-              return (
-                <li key={ index }>
-                  <p data-testid={ `player-name-${index}` }>{e.name}</p>
-                  <p data-testid={ `player-score-${index}` }>{e.score}</p>
-                </li>
-              );
-            })
-          }
-        </ol>
+
+        {
+          ranking.map((e, index) => {
+            console.log(e);
+            return (
+              <div key={ index }>
+                <p data-testid={ `player-name-${index}` }>{e.name}</p>
+                <p data-testid={ `player-score-${index}` }>{e.score}</p>
+              </div>
+            );
+          })
+        }
+
         <RedirectButton
           dataTestId="btn-go-home"
           redirectPage="/"

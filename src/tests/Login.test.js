@@ -57,9 +57,6 @@ describe('Testa a pagina de Login.', () => {
       expect(screen.getByTestId(nameId)).toHaveDisplayValue(nomeAluno);
       expect(screen.getByTestId('btn-play')).not.toBeDisabled();
       userEvent.click(screen.getByTestId('btn-play'));
-
-      // const { pathname } = history.location;
-      // expect(pathname).toBe('/game');
       expect(global.fetch).toHaveBeenCalledTimes(1);
       expect(global.fetch).toHaveBeenCalledWith(apiUrl);
     });
