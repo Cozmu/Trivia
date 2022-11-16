@@ -9,11 +9,19 @@ html, body {
   height: 100%;
 }
 
+.carregando {
+  align-items: center;
+  display: flex;
+  height: calc(100vh - 180px);
+  justify-content: center;
+  width: 100%;
+}
+
 .game-container {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  height: calc(100vh - 192px);
+  height: calc(100vh - 180px);
   justify-content: space-around;
 }
 
