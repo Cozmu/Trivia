@@ -25,7 +25,7 @@ class Ranking extends React.Component {
     const { history } = this.props;
     const { ranking } = this.state;
     return (
-      <main>
+      <main className="ranking-main">
         <h1 data-testid="ranking-title">Ranking</h1>
         <ol>
           {

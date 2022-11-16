@@ -8,14 +8,7 @@
   padding: 0;
 }
 
-
-body {
-  align-items: center;
-  background-color: white;
-}
-
-
-main {
+.ranking-main {
   align-items: center;
   background-color: white;
   border-radius: 10px;
@@ -68,7 +61,7 @@ button {
   background: #2fc18c;
   border-radius: 5px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  color: white;
+  cursor: pointer;
   font-weight: 700;
   isolation: isolate;
   padding: 0.7rem 2rem;
