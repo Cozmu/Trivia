@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import { fetchQuestion, rightAnswer,
   timesUp, following, nextQuestion, defaultCorrect } from '../redux/actions/index';
 import Cronometro from '../components/Cronometro';
+import '../css/Game.css';
 
 class Game extends React.Component {
   state = {
@@ -88,9 +89,9 @@ class Game extends React.Component {
   handleColor = (value) => {
     const { buttoncolor } = this.state;
     if (buttoncolor) {
-      return value ? 'green-border' : 'red-border';
+      return value ? 'answers green-border' : 'answers red-border';
     }
-    return '';
+    return 'answers';
   };
 
   shuffle = (question, index) => {
@@ -119,20 +120,30 @@ class Game extends React.Component {
         <Header history={ history } />
         {isLoading ? <p>Loading ...</p>
           : (
-            <div>
-              <Cronometro contador={ contador } counter={ this.counter } />
-              <p
-                data-testid="question-category"
-              >
-                {results[indexQuestion]?.category}
-              </p>
-              <p
-                data-testid="question-text"
-              >
-                {results[indexQuestion]?.question}
-              </p>
-              <section data-testid="answer-options">
-                { perguntas.length !== 0
+            <div className="game-container">
+              <article className="question-container">
+                <section className="question-category-cotainer">
+                  <p
+                    data-testid="question-category"
+                  >
+                    {results[indexQuestion]?.category}
+                  </p>
+                </section>
+                <section className="question-text-container">
+                  <p
+                    data-testid="question-text"
+                  >
+                    {results[indexQuestion]?.question}
+                  </p>
+                </section>
+                <Cronometro contador={ contador } counter={ this.counter } />
+              </article>
+              <div className="btns-container">
+                <section
+                  className="answer-options"
+                  data-testid="answer-options"
+                >
+                  { perguntas.length !== 0
                 && perguntas.map(({ answers, value, difficulty }, i) => (
                   <button
                     className={ this.handleColor(value) }
@@ -145,16 +156,18 @@ class Game extends React.Component {
                     { answers }
                   </button>
                 ))}
-              </section>
-              {proxPergunta && (
-                <button
-                  type="button"
-                  data-testid="btn-next"
-                  onClick={ this.following }
-                >
-                  Next Question
-                </button>
-              )}
+                </section>
+                {proxPergunta && (
+                  <button
+                    type="button"
+                    className="btn-next"
+                    data-testid="btn-next"
+                    onClick={ this.following }
+                  >
+                    PRÓXIMA
+                  </button>
+                )}
+              </div>
             </div>)}
       </main>
     );
