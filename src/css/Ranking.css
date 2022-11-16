@@ -1,85 +1,78 @@
 @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@100;200;300;400;500;600;700;900&display=swap');
 
 * {
-  margin: 0;
   border: 0;
-  padding: 0;
   box-sizing: border-box;
   font-family: 'Epilogue', sans-serif;
-  letter-spacing: 0.12em;
   font-size: 1rem;
+  letter-spacing: 0.12em;
+  margin: 0;
+  padding: 0;
 }
 
 
 body {
-  /* background-image: url('./images/25235\ 2.png');
-  height: 724px; */
   align-items: center;
-  background-color: #EEEEEE;
+  background-color: white;
 }
 
 
 main {
-  /* mix-blend-mode: multiply;
-  background: linear-gradient(180deg, #3C1B7A 0%, #000000 100%);
-  height: 724px; */
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin: auto;
+  padding: 2rem;
   position: relative;
   top: 10rem;
-  margin: auto;
-  box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
   width: 40%;
-  padding: 2rem;
-  background-color: #FFFFFF;
 }
 
 h1 {
-  margin-bottom: 1rem;
+  color: #3c1b7a;
   font-size: 1.875rem;
+  margin-bottom: 1rem;
   text-transform: uppercase;
-  color: #3C1B7A;
 }
 
 ol {
-  /* isolation: isolate;
-  mix-blend-mode: normal; */
-  background-color: #FFFFFF;
+  background-color: white;
   list-style: none;
   text-align: center;
   margin-bottom: 1rem;
 }
 
 li {
-  margin: 1rem;
-  background: #EBEBEB;
+  background: #ebebeb;
   border-radius: 100px;
   display: flex;
   justify-content: space-between;
+  margin: 1rem;
 }
 
 .player-score {
-  background: #FFFFFF;
-  box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
+  background: white;
   border-radius: 100px;
+  box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
   padding: .5rem 2rem;
 
 }
 
 .player-name {
-  padding: .5rem 2rem;
   letter-spacing: normal;
+  padding: .5rem 2rem;
 }
 
 button {
-  isolation: isolate;
   background: #2FC18C;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  padding: .7rem 2rem;
-  font-weight: 700;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #FFFFFF;
+  font-weight: 700;
+  isolation: isolate;
+  padding: .7rem 2rem;
   text-transform: uppercase;
 }
