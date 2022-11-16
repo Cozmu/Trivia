@@ -3,7 +3,7 @@
 * {
   border: 0;
   box-sizing: border-box;
-  font-family: 'Epilogue', sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 1rem;
   letter-spacing: 0.12em;
   margin: 0;
@@ -41,8 +41,8 @@ h1 {
 ol {
   background-color: white;
   list-style: none;
-  text-align: center;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 li {
@@ -56,23 +56,23 @@ li {
 .player-score {
   background: white;
   border-radius: 100px;
-  box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
-  padding: .5rem 2rem;
+  box-shadow: 0px 4px 22px 0px rgba(0, 0, 0, 0.25);
+  padding: 0.5rem 2rem;
 
 }
 
 .player-name {
   letter-spacing: normal;
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
 }
 
 button {
-  background: #2FC18C;
+  background: #2fc18c;
   border-radius: 5px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  color: #FFFFFF;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: white;
   font-weight: 700;
   isolation: isolate;
-  padding: .7rem 2rem;
+  padding: 0.7rem 2rem;
   text-transform: uppercase;
 }
