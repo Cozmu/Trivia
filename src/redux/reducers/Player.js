@@ -1,5 +1,6 @@
 import {
   RIGHT_ANSWER,
+  DEFAULT_CORRECT,
   SAVE_NAME_AND_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
@@ -43,6 +44,11 @@ function player(state = INITIAL_STATE, action) {
       correct: true,
       score: computingPoints(state.score, action.difficulty, action.time),
       assertions: state.assertions + 1,
+    };
+  case DEFAULT_CORRECT:
+    return {
+      ...state,
+      correct: false,
     };
   default:
     return state;

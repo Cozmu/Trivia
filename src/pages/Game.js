@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { fetchQuestion, rightAnswer,
-  timesUp, following, nextQuestion } from '../redux/actions/index';
+  timesUp, following, nextQuestion, defaultCorrect } from '../redux/actions/index';
 import Cronometro from '../components/Cronometro';
 
 class Game extends React.Component {
@@ -46,6 +46,7 @@ class Game extends React.Component {
       if (indexQuestion > FOUR) {
         history.push('/feedback');
       }
+      dispatch(defaultCorrect())
       this.counter();
       this.shuffle(results, indexQuestion);
       dispatch(nextQuestion());

@@ -43,3 +43,8 @@ export const NEXT_QUESTION = 'NEXT_QUESTION';
 export const nextQuestion = () => ({
   type: NEXT_QUESTION,
 });
+
+export const DEFAULT_CORRECT = 'DEFAULT_CORRECT';
+export const defaultCorrect = () => ({
+  type: DEFAULT_CORRECT,
+});
