@@ -5,6 +5,8 @@ import Header from '../components/Header';
 import { fetchQuestion, rightAnswer,
   timesUp, following, nextQuestion, defaultCorrect } from '../redux/actions/index';
 import Cronometro from '../components/Cronometro';
+import '../css/Game.css';
+import trybe from '../imgs/trybe.png';
 
 class Game extends React.Component {
   state = {
@@ -44,7 +46,7 @@ class Game extends React.Component {
       const { results, history, dispatch } = this.props;
       const FOUR = 4;
       if (indexQuestion > FOUR) {
-        history.push('/feedback');
+        return history.push('/feedback');
       }
       dispatch(defaultCorrect());
       this.counter();
@@ -61,10 +63,7 @@ class Game extends React.Component {
       }), () => {
         const { contador } = this.state;
         const { dispatch, correct, proxPergunta } = this.props;
-        if (correct) {
-          clearInterval(tempo);
-        }
-        if (proxPergunta) {
+        if (correct || proxPergunta) {
           clearInterval(tempo);
         }
         if (contador === 0) {
@@ -76,6 +75,7 @@ class Game extends React.Component {
   };
 
   revealAnswer = (correto, dificuldade) => {
+    // target.style = { backgroundColor: 'darkgray' }; nao funciona
     const { contador } = this.state;
     const { dispatch } = this.props;
     this.setState({ buttoncolor: true });
@@ -88,9 +88,9 @@ class Game extends React.Component {
   handleColor = (value) => {
     const { buttoncolor } = this.state;
     if (buttoncolor) {
-      return value ? 'green-border' : 'red-border';
+      return value ? 'answers green-border' : 'answers red-border';
     }
-    return '';
+    return 'answers';
   };
 
   shuffle = (question, index) => {
@@ -111,27 +111,40 @@ class Game extends React.Component {
   };
 
   render() {
-    const { results, isDisabled, history, proxPergunta } = this.props;
+    const { results, isDisabled, proxPergunta } = this.props;
     const { indexQuestion, isLoading, perguntas, contador } = this.state;
     return (
       <main>
-        <Header history={ history } />
-        {isLoading ? <p>Loading...</p>
+        <Header />
+        {isLoading ? (
+          <div className="carregando">
+            <h1>Loading ...</h1>
+          </div>)
           : (
-            <div>
-              <Cronometro contador={ contador } counter={ this.counter } />
-              <p
-                data-testid="question-category"
-              >
-                {results[indexQuestion]?.category}
-              </p>
-              <p
-                data-testid="question-text"
-              >
-                {results[indexQuestion]?.question}
-              </p>
-              <section data-testid="answer-options">
-                { perguntas.length !== 0
+            <div className="game-container">
+              <article className="question-container">
+                <section className="question-category-cotainer">
+                  <p
+                    data-testid="question-category"
+                  >
+                    {results[indexQuestion]?.category}
+                  </p>
+                </section>
+                <section className="question-text-container">
+                  <p
+                    data-testid="question-text"
+                  >
+                    {results[indexQuestion]?.question}
+                  </p>
+                </section>
+                <Cronometro contador={ contador } counter={ this.counter } />
+              </article>
+              <div className="btns-container">
+                <section
+                  className="answer-options"
+                  data-testid="answer-options"
+                >
+                  { perguntas.length !== 0
                 && perguntas.map(({ answers, value, difficulty }, i) => (
                   <button
                     className={ this.handleColor(value) }
@@ -144,17 +157,22 @@ class Game extends React.Component {
                     { answers }
                   </button>
                 ))}
-              </section>
-              {proxPergunta && (
-                <button
-                  type="button"
-                  data-testid="btn-next"
-                  onClick={ this.following }
-                >
-                  Next Question
-                </button>
-              )}
+                </section>
+                {proxPergunta && (
+                  <button
+                    type="button"
+                    className="btn-next"
+                    data-testid="btn-next"
+                    onClick={ this.following }
+                  >
+                    PRÓXIMA
+                  </button>
+                )}
+              </div>
             </div>)}
+        <footer className="footer">
+          <img src={ trybe } alt="logo-trybe" />
+        </footer>
       </main>
     );
   }

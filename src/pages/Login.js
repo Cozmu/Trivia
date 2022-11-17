@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { BsFillGearFill } from 'react-icons/bs';
 import { resetScore, saveNameAndEmail } from '../redux/actions';
+import '../css/Login.css';
+import logoTrivia from '../imgs/logoTrivia.png';
+import logoTrybe from '../imgs/trybe.png';
 
 class Login extends React.Component {
   state = {
@@ -42,52 +46,61 @@ class Login extends React.Component {
   render() {
     const { email, name, disabled } = this.state;
     return (
-      <main>
-        <label htmlFor="email">
-          Email
-          <input
-            placeholder="Qual seu email do gravatar?"
-            data-testid="input-gravatar-email"
-            id="email"
-            type="email"
-            value={ email }
-            onChange={ this.handleInput }
-          />
-        </label>
-        <label htmlFor="name">
-          Nome
-          <input
-            placeholder="Qual é seu nome?"
-            data-testid="input-player-name"
-            id="name"
-            type="text"
-            value={ name }
-            onChange={ this.handleInput }
-          />
-        </label>
-        <button
-          disabled={ !disabled }
-          data-testid="btn-play"
-          type="button"
-          onClick={ this.fetchToken }
+      <div>
+        <header className="header-login">
+          <button
+            type="button"
+            data-testid="btn-settings"
+            onClick={ () => {
+              const { history } = this.props;
+              history.push('/config');
+            } }
+          >
+            <BsFillGearFill />
+          </button>
+        </header>
+        <main className="login-container">
+          <section className="logo-login">
+            <img src={ logoTrivia } alt="logo-trivia" />
+          </section>
+          <section className="form-login">
 
-        >
-          Play
+            <label htmlFor="email">
+              <input
+                placeholder="Qual seu email do gravatar?"
+                data-testid="input-gravatar-email"
+                id="email"
+                type="email"
+                value={ email }
+                onChange={ this.handleInput }
+              />
+            </label>
+            <label htmlFor="name">
+              <input
+                placeholder="Qual é seu nome?"
+                data-testid="input-player-name"
+                id="name"
+                type="text"
+                value={ name }
+                onChange={ this.handleInput }
+              />
+            </label>
+            <button
+              disabled={ !disabled }
+              data-testid="btn-play"
+              type="button"
+              onClick={ this.fetchToken }
 
-        </button>
-        <br />
-        <button
-          type="button"
-          data-testid="btn-settings"
-          onClick={ () => {
-            const { history } = this.props;
-            history.push('/config');
-          } }
-        >
-          Configurações
-        </button>
-      </main>
+            >
+              Play
 
+            </button>
+          </section>
+          <footer>
+            <img src={ logoTrybe } alt="trybe-logo" />
+          </footer>
+        </main>
+      </div>
     );
   }
 }

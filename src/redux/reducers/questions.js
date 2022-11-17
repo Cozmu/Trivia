@@ -3,6 +3,7 @@ import {
   TIMES_UP,
   NEXT_QUESTION,
   FOLLOWING,
+  RESET_SCORE,
 } from '../actions/index';
 
 const initionState = {
@@ -38,6 +39,11 @@ const questions = (state = initionState, action) => {
       isDisabled: false,
       proxPergunta: false,
     };
+  case RESET_SCORE:
+    return {
+      ...state,
+      isDisabled: false,
+      proxPergunta: false };
   default:
     return state;
   }

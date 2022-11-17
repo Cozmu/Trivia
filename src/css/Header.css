@@ -1,0 +1,38 @@
+.header-container {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  height: 120px;
+  justify-content: space-around;
+}
+
+.logoTrivia {
+  height: 90px;
+  width: 90px;
+}
+
+.info-jogador-container {
+  align-items: center;
+  display: flex;
+}
+
+.info-jogador-container img {
+  border-radius: 100%;
+  height: 37px;
+  margin-right: 5px;
+  width: 37px;
+}
+
+.pontuacao-container {
+  align-items: center;
+  display: flex;
+}
+
+.pontuacao-container .score {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.start {
+  color: rgb(238, 155, 0);
+}

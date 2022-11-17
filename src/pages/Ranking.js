@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { AiFillStar } from 'react-icons/ai';
 import RedirectButton from '../components/RedirectButton';
+import '../css/Ranking.css';
 import getLocalStorage from '../services/getLocalStorage';
 
 class Ranking extends React.Component {
@@ -23,22 +25,34 @@ class Ranking extends React.Component {
   render() {
     const { history } = this.props;
     const { ranking } = this.state;
+
     return (
-      <main>
+      <main className="ranking-main">
         <h1 data-testid="ranking-title">Ranking</h1>
-
-        {
-          ranking.map((e, index) => {
-            console.log(e);
-            return (
-              <div key={ index }>
-                <p data-testid={ `player-name-${index}` }>{e.name}</p>
-                <p data-testid={ `player-score-${index}` }>{e.score}</p>
-              </div>
-            );
-          })
-        }
-
+        <ol>
+          {ranking.length !== 0 ? ranking.map((e, index) => (
+            <li key={ index }>
+              <p
+                className="player-name"
+                data-testid={ `player-name-${index}` }
+              >
+                {e.name}
+              </p>
+              <p
+                className="player-score"
+                data-testid={ `player-score-${index}` }
+              >
+                <AiFillStar className="ranking-star" />
+                <b>{e.score}</b>
+                {' '}
+                pontos
+              </p>
+            </li>
+          )) : (
+            <div className="ranking-main">
+              <h3>Nada</h3>
+            </div>) }
+        </ol>
         <RedirectButton
           dataTestId="btn-go-home"
           redirectPage="/"

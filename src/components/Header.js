@@ -2,7 +2,9 @@ import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import RedirectButton from './RedirectButton';
+import '../css/Header.css';
+import { AiFillStar } from 'react-icons/ai';
+import logoTrivia from '../imgs/logoTriviaM.png';
 
 class Header extends React.Component {
   state = {
@@ -23,37 +25,40 @@ class Header extends React.Component {
 
   render() {
     const { img } = this.state;
-    const { name, score, history } = this.props;
+    const { name, score } = this.props;
     return (
-      <header>
+      <header className="header-container">
         <img
-          data-testid="header-profile-picture"
-          src={ img }
-          alt=""
+          className="logoTrivia"
+          src={ logoTrivia }
+          alt="logoTrivia"
         />
-        <h3
-          data-testid="header-player-name"
-        >
-          {name}
+        <section className="info-jogador-container">
+          <img
+            data-testid="header-profile-picture"
+            src={ img }
+            alt=""
+          />
+          <h3
+            data-testid="header-player-name"
+          >
+            {name}
 
-        </h3>
-        <h3
-          data-testid="header-score"
-        >
-          {score}
-        </h3>
-        <RedirectButton
-          dataTestId="btn-play-again"
-          redirectPage="/"
-          text="Play Again"
-          history={ history }
-        />
-        <RedirectButton
-          dataTestId="btn-ranking"
-          redirectPage="/ranking"
-          text="Ranking"
-          history={ history }
-        />
+          </h3>
+        </section>
+        <section className="pontuacao-container">
+          <AiFillStar className="start" />
+          <h3
+            className="score"
+          >
+            Pontos:
+          </h3>
+          <h3
+            data-testid="header-score"
+          >
+            {score}
+          </h3>
+        </section>
       </header>
     );
   }
