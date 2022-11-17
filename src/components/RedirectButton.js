@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { resetScore } from '../redux/actions/index';
 
 class RedirectButton extends React.Component {
   render() {
-    const { dataTestId, redirectPage, text, history, className } = this.props;
+    const { dataTestId, redirectPage, text, history, className, dispatch } = this.props;
     return (
       <button
         className={ className }
@@ -12,6 +13,7 @@ class RedirectButton extends React.Component {
         data-testid={ dataTestId }
         onClick={ () => {
           history.push(`${redirectPage}`);
+          dispatch(resetScore());
         } }
       >
         {text}

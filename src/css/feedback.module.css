@@ -93,3 +93,12 @@ body {
   text-align: center;
   width: 100%;
 }
+
+.testeChato {
+  display: flex;
+}
+
+.testeChato .pontos {
+  margin-left: 3px;
+  margin-right: 3px;
+}

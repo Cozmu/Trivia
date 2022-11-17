@@ -46,7 +46,7 @@ class Game extends React.Component {
       const { results, history, dispatch } = this.props;
       const FOUR = 4;
       if (indexQuestion > FOUR) {
-        history.push('/feedback');
+        return history.push('/feedback');
       }
       dispatch(defaultCorrect());
       this.counter();
@@ -78,6 +78,7 @@ class Game extends React.Component {
   };
 
   revealAnswer = (correto, dificuldade) => {
+    // target.style = { backgroundColor: 'darkgray' }; nao funciona
     const { contador } = this.state;
     const { dispatch } = this.props;
     this.setState({ buttoncolor: true });

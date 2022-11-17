@@ -48,17 +48,26 @@ class Feedback extends React.Component {
 
           </h1>
           <div className={ style.assertionsScore }>
-            <h1
-              data-testid="feedback-total-question"
-            >
-              {`Você acertou ${assertions} questões!`}
-            </h1>
-            <h1
-              className={ style.pontos }
-              data-testid="feedback-total-score"
-            >
-              {`Um total de ${score} pontos!`}
-            </h1>
+            <section className={ style.testeChato }>
+              <h1>Você acertou</h1>
+              <h1
+                className={ style.pontos }
+                data-testid="feedback-total-question"
+              >
+                {assertions}
+              </h1>
+              <h1> questões!</h1>
+            </section>
+            <section className={ style.testeChato }>
+              <h1>Um total de</h1>
+              <h1
+                className={ style.pontos }
+                data-testid="feedback-total-score"
+              >
+                {score}
+              </h1>
+              <h1> pontos!</h1>
+            </section>
           </div>
         </div>
         <div className={ style.buttons }>
