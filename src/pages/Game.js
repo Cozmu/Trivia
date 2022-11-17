@@ -63,10 +63,7 @@ class Game extends React.Component {
       }), () => {
         const { contador } = this.state;
         const { dispatch, correct, proxPergunta } = this.props;
-        if (correct) {
-          clearInterval(tempo);
-        }
-        if (proxPergunta) {
+        if (correct || proxPergunta) {
           clearInterval(tempo);
         }
         if (contador === 0) {
