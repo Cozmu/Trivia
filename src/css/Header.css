@@ -2,16 +2,13 @@
   align-items: center;
   background-color: white;
   display: flex;
-  height: 113px;
+  height: 120px;
   justify-content: space-around;
 }
 
 .logoTrivia {
-  bottom: -65px;
-  height: 222px;
-  left: 130px;
-  position: relative;
-  width: 200px;
+  height: 90px;
+  width: 90px;
 }
 
 .info-jogador-container {

@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import '../css/Header.css';
 import { AiFillStar } from 'react-icons/ai';
-import logoTrivia from '../imgs/logoTrivia.png';
+import logoTrivia from '../imgs/logoTriviaM.png';
 
 class Header extends React.Component {
   state = {

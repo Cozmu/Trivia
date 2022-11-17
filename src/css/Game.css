@@ -21,7 +21,7 @@ html, body {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  height: calc(100vh - 180px);
+  height: calc(100vh - 187px);
   justify-content: space-around;
 }
 
