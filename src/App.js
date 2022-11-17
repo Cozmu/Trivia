@@ -12,7 +12,7 @@ class App extends React.Component {
     return (
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/game" component={ Game } />
+        <Route exact path="/game" component={ Game } />
         <Route exact path="/config" component={ Config } />
         <Route exact path="/feedback" component={ Feedback } />
         <Route exact path="/ranking" component={ Ranking } />

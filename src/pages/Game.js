@@ -64,6 +64,7 @@ class Game extends React.Component {
         if (correct) {
           clearInterval(tempo);
         }
+        console.log('proximaPergunta:', proxPergunta);
         if (proxPergunta) {
           clearInterval(tempo);
         }
@@ -95,20 +96,19 @@ class Game extends React.Component {
 
   shuffle = (question, index) => {
     const FOUR = 4;
-    if (index > FOUR) {
-      return console.log('done');
+    if (index <= FOUR) {
+      const meio = 0.5;
+      const answers = [question[index].correct_answer,
+        ...question[index].incorrect_answers];
+      const random = answers.sort(() => Math.random() - meio);
+      const answerRandom = random.map((e) => {
+        if (e === question[index].correct_answer) {
+          return { answers: e, value: true, difficulty: question[index].difficulty };
+        }
+        return { answers: e, value: false, difficulty: question[index].difficulty };
+      });
+      this.setState({ perguntas: answerRandom });
     }
-    const meio = 0.5;
-    const answers = [question[index].correct_answer,
-      ...question[index].incorrect_answers];
-    const random = answers.sort(() => Math.random() - meio);
-    const answerRandom = random.map((e) => {
-      if (e === question[index].correct_answer) {
-        return { answers: e, value: true, difficulty: question[index].difficulty };
-      }
-      return { answers: e, value: false, difficulty: question[index].difficulty };
-    });
-    this.setState({ perguntas: answerRandom });
   };
 
   render() {
@@ -117,7 +117,7 @@ class Game extends React.Component {
     return (
       <main>
         <Header history={ history } />
-        {isLoading ? <p>Loading ...</p>
+        {isLoading ? <p>Loading...</p>
           : (
             <div>
               <Cronometro contador={ contador } counter={ this.counter } />

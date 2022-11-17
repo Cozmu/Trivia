@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, screen, waitFor } from '@testing-library/react';
+import { act, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App';
@@ -90,9 +90,10 @@ const emailId = 'input-gravatar-email';
 const nameId = 'input-player-name';
 const emailAluno = 'aluno@trybe.com.br';
 const nomeAluno = 'Aluno A';
-afterEach(() => jest.clearAllMocks());
+
 describe('Testa a página de Game e seus componentes.', () => {
     describe('1. Testa se ao retornar um token invalido o usuário é retornado para "/".', () => {
+        afterEach(() => jest.clearAllMocks());
         test('1.1. Testa se retorna à página de login se estiver com valor', () => {
             jest.spyOn(global, 'fetch');
             global.fetch.mockResolvedValue({
@@ -143,6 +144,38 @@ describe('Testa a página de Game e seus componentes.', () => {
             expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
 
         });
+        test('3.2. Testa se renderiza o cronometro com valor final é "0".', async () => {
+            renderWithRouterAndRedux(<Game />, initialState);
+            await screen.findByTestId('question-text')
+            expect(screen.getByTestId('cronometro')).toBeInTheDocument()
+            expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
+            await waitFor(() => {
+                expect(screen.getByTestId('btn-next')).toBeInTheDocument();
+                expect(screen.getByTestId('cronometro')).toHaveTextContent('0')
+            }, { timeout: 40000 });
+            expect(screen.getByTestId('cronometro')).toHaveTextContent('0')
+            // waitFor(() => {
+            //     expect(screen.getByTestId('cronometro')).toHaveTextContent('29')
+            // })
+
+
+        });
+        test('3.3. ....', async () => {
+            renderWithRouterAndRedux(<Game />, initialState);
+            await screen.findByTestId('question-text')
+            expect(screen.getByTestId('cronometro')).toBeInTheDocument()
+            expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
+            // await waitFor(() => {
+            //     expect(screen.getByTestId('cronometro')).toHaveTextContent('29')
+            // }, { timeout: 2000 });
+            act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            //expect(screen.getByTestId('cronometro')).toHaveTextContent('29')
+            waitFor(() => {
+                expect(screen.getByTestId('correct-answer')).toHaveStyle('border: 3px solid rgb(6, 240, 15)')
+            })
+
+
+        });
     })
     describe('4. Testa as perguntas na pagina Game.', () => {
         test('4.1. Testa se renderiza certo a primeira pergunta corretamente.', async () => {
@@ -163,31 +196,105 @@ describe('Testa a página de Game e seus componentes.', () => {
         test('4.2. Testa o valor do Score clicar na resposta certa média.', async () => {
             renderWithRouterAndRedux(<Game />, initialState);
             expect(await screen.findByTestId('question-text')).toHaveTextContent('What does CPU stand for?')
-            act(() => userEvent.click(screen.getByTestId('wrong-answer2')))
+            act(() => userEvent.click(screen.getByTestId('correct-answer')))
             act(() => userEvent.click(screen.getByTestId('btn-next')))
             expect(await screen.findByTestId('question-text')).toHaveTextContent('Who played the female lead in the 1933 film &quot;King Kong&quot;?')
             expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
             expect(screen.getByTestId('header-score')).toHaveTextContent(0)
             act(() => userEvent.click(screen.getByTestId('correct-answer')))
             await waitFor(() => {
-                expect(screen.getByTestId('header-score')).toHaveTextContent(70);
+                expect(screen.getByTestId('header-score')).toHaveTextContent(110);
             });
         });
-        test('4.2. Testa o valor do Score clicar na resposta certa média.', async () => {
-            renderWithRouterAndRedux(<Game />, initialState);
+        test('4.2. Testa o valor do Score clicar na resposta certa difícil.', async () => {
+            const { history } = renderWithRouterAndRedux(<Game />, initialState, '/game');
+            console.log('LEAO', history)
             expect(await screen.findByTestId('question-text')).toHaveTextContent('What does CPU stand for?')
-            act(() => userEvent.click(screen.getByTestId('wrong-answer2')))
+            act(() => userEvent.click(screen.getByTestId('correct-answer')))
             act(() => userEvent.click(screen.getByTestId('btn-next')))
             expect(await screen.findByTestId('question-text')).toHaveTextContent('Who played the female lead in the 1933 film &quot;King Kong&quot;?')
-            act(() => userEvent.click(screen.getByTestId('wrong-answer2')))
+            act(() => userEvent.click(screen.getByTestId('correct-answer')))
             act(() => userEvent.click(screen.getByTestId('btn-next')))
             expect(await screen.findByTestId('question-text')).toHaveTextContent('In the 1999 movie Fight Club, which of these is not a rule of the &quot;fight club&quot;?')
             expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
             expect(screen.getByTestId('header-score')).toHaveTextContent(0)
             act(() => userEvent.click(screen.getByTestId('correct-answer')))
             await waitFor(() => {
-                expect(screen.getByTestId('header-score')).toHaveTextContent(100);
+                expect(screen.getByTestId('header-score')).toHaveTextContent(210);
             });
+            act(() => userEvent.click(screen.getByTestId('btn-next')))
+            expect(await screen.findByTestId('question-text')).toBeInTheDocument()
+            act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            act(() => userEvent.click(screen.getByTestId('btn-next')))
+            expect(await screen.findByTestId('question-text')).toBeInTheDocument()
+            act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            act(() => userEvent.click(screen.getByTestId('btn-next')))
+            const { pathname } = history.location;
+
+            expect(pathname).toBe('/feedback');
+
+        });
+
+    })
+    describe('5. Testa se vai para página feedback depois de 5 perguntas.', () => {
+        test('5.1. Testa se vai para página feedback depois de 5 perguntas.', async () => {
+            // jest.useFakeTimers()
+            // jest.spyOn(global, 'fetch');
+            // global.fetch.mockResolvedValue({
+            //     json: jest.fn().mockResolvedValue(initialState.questions),
+            // });
+            // const { history } = renderWithRouterAndRedux(<App />, undefined, '/game');
+            //userEvent.type(screen.getByTestId(emailId), emailAluno);
+            //userEvent.type(screen.getByTestId(nameId), nomeAluno);
+            //userEvent.click(screen.getByTestId('btn-play'));
+            // history.push('/game')
+            // act(() => history.push('/game'));
+            // expect(global.fetch).toHaveBeenCalledTimes(1)
+            // await waitForElementToBeRemoved(() => screen.getByText('Loading...'))
+            // const firstQuestion = await screen.findByTestId('question-text')
+            // expect(firstQuestion).toBeInTheDocument()
+            //act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            // let timer = 0;
+            // jest.setTimeout(4000);
+            // setTimeout(() => timer = 4, 4000)
+            // waitFor(() => {
+            //     expect(timer).toBe(4)
+            // })
+            //jest.advanceTimersByTime(32000);image.png
+            //jest.advanceTimersToNextTimer()
+            // await new Promise((r) => setTimeout(r, 1000));
+            //await screen.findByTestId('correct-answer')
+            // screen.logTestingPlaygroundURL()
+            // await screen.findByTestId('btn-next')
+
+
+            // act(() => userEvent.click(screen.getByTestId('btn-next')))
+            // expect(await screen.findByTestId('question-text')).toBeInTheDocument()
+            // act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            // act(() => userEvent.click(screen.getByTestId('btn-next')))
+            // expect(await screen.findByTestId('question-text')).toBeInTheDocument()
+            // act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            // act(() => userEvent.click(screen.getByTestId('btn-next')))
+            // expect(await screen.findByTestId('question-text')).toBeInTheDocument()
+            // act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            // act(() => userEvent.click(screen.getByTestId('btn-next')))
+            // expect(await screen.findByTestId('question-text')).toBeInTheDocument()
+            // expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
+            // act(() => userEvent.click(screen.getByTestId('correct-answer')))
+            // act(() => userEvent.click(screen.getByTestId('btn-next')))
+            // const { pathname } = history.location;
+            // expect(pathname).toBe('/feedback');
+
         });
     })
 })
+
+// renderWithRouterAndRedux(<Game />, initialState);
+//             expect(await screen.findByTestId('question-text')).toHaveTextContent('What does CPU stand for?')
+//             expect(screen.getByTestId('cronometro')).toHaveTextContent('30')
+//             expect(screen.getByTestId('header-score')).toHaveTextContent(0)
+//             act(() => userEvent.click(screen.getByTestId('correct-answer')))
+//             expect(screen.getByTestId('correct-answer')).toBeDisabled();
+//             expect(screen.getByTestId('wrong-answer0')).toBeDisabled();
+//             expect(screen.getByTestId('correct-answer')).toHaveStyle('border: 3px solid red')
+//             expect(screen.getByTestId('wrong-answer0')).toHaveStyle('border: 3px solid rgb(6, 240, 15)');
