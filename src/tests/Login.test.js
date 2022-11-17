@@ -65,7 +65,6 @@ describe('Testa a pagina de Login.', () => {
     test('4.1. Testa ao clicar no botão de configurações, é trocado de path para "/config"', () => {
       const { history } = renderWithRouterAndRedux(<App />);
       expect(screen.getByTestId(buttonSettings)).toBeInTheDocument();
-      expect(screen.getByTestId(buttonSettings)).toHaveTextContent('Configurações');
       userEvent.click(screen.getByTestId(buttonSettings));
       const { pathname } = history.location;
       expect(pathname).toBe('/config');
