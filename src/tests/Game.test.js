@@ -131,13 +131,6 @@ describe('Testa a página de Game e seus componentes.', () => {
       expect(screen.getByTestId(headScore)).toBeInTheDocument();
       expect(screen.getByTestId(headScore)).toHaveTextContent('0');
     });
-    test('2.4. Testa se renderiza os botões "Play Again" e "Ranking".', () => {
-      renderWithRouterAndRedux(<Game />, initialState);
-      expect(screen.getByTestId('btn-play-again')).toBeInTheDocument();
-      expect(screen.getByTestId('btn-ranking')).toBeInTheDocument();
-      expect(screen.getByTestId('btn-play-again')).toHaveTextContent('Play Again');
-      expect(screen.getByTestId('btn-ranking')).toHaveTextContent('Ranking');
-    });
   });
   describe('3. Testa o componente Cronometro na pagina Game.', () => {
     jest.setTimeout(42000);
@@ -258,6 +251,10 @@ describe('Testa a página de Game e seus componentes.', () => {
       act(() => userEvent.click(screen.getByTestId(correctAnswer)));
       act(() => userEvent.click(screen.getByTestId('btn-next')));
       expect(history.location.pathname).toBe('/feedback');
+      expect(screen.getByTestId('btn-play-again')).toBeInTheDocument();
+      expect(screen.getByTestId('btn-ranking')).toBeInTheDocument();
+      expect(screen.getByTestId('btn-play-again')).toHaveTextContent('Play Again');
+      expect(screen.getByTestId('btn-ranking')).toHaveTextContent('Ranking');
 
       // userEvent.type(screen.getByTestId(emailId), emailAluno);
       // userEvent.type(screen.getByTestId(nameId), nomeAluno);
