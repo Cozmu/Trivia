@@ -36,7 +36,7 @@ class Cronometro extends React.Component {
         <h3 className="tempo">
           Tempo:
         </h3>
-        <h3>
+        <h3 data-testid="cronometro">
           {contador}
           s
         </h3>
