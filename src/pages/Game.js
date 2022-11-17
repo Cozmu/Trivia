@@ -64,7 +64,6 @@ class Game extends React.Component {
         if (correct) {
           clearInterval(tempo);
         }
-        console.log('proximaPergunta:', proxPergunta);
         if (proxPergunta) {
           clearInterval(tempo);
         }
