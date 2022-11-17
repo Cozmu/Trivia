@@ -112,11 +112,11 @@ class Game extends React.Component {
   };
 
   render() {
-    const { results, isDisabled, history, proxPergunta } = this.props;
+    const { results, isDisabled, proxPergunta } = this.props;
     const { indexQuestion, isLoading, perguntas, contador } = this.state;
     return (
       <main>
-        <Header history={ history } />
+        <Header />
         {isLoading ? <p>Loading ...</p>
           : (
             <div>

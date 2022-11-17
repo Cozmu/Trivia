@@ -2,7 +2,7 @@ import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import RedirectButton from './RedirectButton';
+// import RedirectButton from './RedirectButton';
 
 class Header extends React.Component {
   state = {
@@ -23,7 +23,7 @@ class Header extends React.Component {
 
   render() {
     const { img } = this.state;
-    const { name, score, history } = this.props;
+    const { name, score } = this.props;
     return (
       <header>
         <img
@@ -42,7 +42,7 @@ class Header extends React.Component {
         >
           {score}
         </h3>
-        <RedirectButton
+        {/* <RedirectButton
           dataTestId="btn-play-again"
           redirectPage="/"
           text="Play Again"
@@ -53,7 +53,7 @@ class Header extends React.Component {
           redirectPage="/ranking"
           text="Ranking"
           history={ history }
-        />
+        /> */}
       </header>
     );
   }
