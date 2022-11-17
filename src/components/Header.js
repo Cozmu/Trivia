@@ -2,7 +2,6 @@ import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-// import RedirectButton from './RedirectButton';
 import '../css/Header.css';
 import { AiFillStar } from 'react-icons/ai';
 import logoTrivia from '../imgs/logoTrivia.png';
@@ -60,18 +59,6 @@ class Header extends React.Component {
             {score}
           </h3>
         </section>
-        {/* <RedirectButton
-          dataTestId="btn-play-again"
-          redirectPage="/"
-          text="Play Again"
-          history={ history }
-        />
-        <RedirectButton
-          dataTestId="btn-ranking"
-          redirectPage="/ranking"
-          text="Ranking"
-          history={ history }
-        /> */}
       </header>
     );
   }
