@@ -1,0 +1,13 @@
+.cronometro {
+  align-items: center;
+  display: flex;
+}
+
+.tempo {
+  margin-left: 5px;
+  margin-right: 3px;
+}
+
+.runningOutOfTime {
+  color: red;
+}

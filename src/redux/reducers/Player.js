@@ -1,8 +1,6 @@
 import {
-  RIGHT_ANSWER,
-  DEFAULT_CORRECT,
-  SAVE_NAME_AND_EMAIL, 
-  RESET_SCORE} from '../actions';
+  DEFAULT_CORRECT, RESET_SCORE, RIGHT_ANSWER, SAVE_NAME_AND_EMAIL,
+} from '../actions';
 
 const INITIAL_STATE = {
   name: '',

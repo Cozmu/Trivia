@@ -1,0 +1,69 @@
+* {
+  border: 0;
+  box-sizing: border-box;
+  font-family: Epilogue , sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  margin: 0;
+  padding: 0;
+}
+
+.ranking-main {
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 2rem;
+  position: relative;
+  top: 10rem;
+  width: 40%;
+}
+
+h1 {
+  color: #3c1b7a;
+  font-size: 1.875rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+ol {
+  background-color: white;
+  list-style: none;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+li {
+  background: #ebebeb;
+  border-radius: 100px;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+.player-score {
+  background: white;
+  border-radius: 100px;
+  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.25);
+  padding: 0.5rem 2rem;
+
+}
+
+.player-name {
+  letter-spacing: normal;
+  padding: 0.5rem 2rem;
+}
+
+button {
+  background: #2fc18c;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  font-weight: 700;
+  isolation: isolate;
+  padding: 0.7rem 2rem;
+  text-transform: uppercase;
+}
