@@ -156,6 +156,7 @@ class Game extends React.Component {
                     type="button"
                     data-testid={ value ? 'correct-answer' : `wrong-answer${i}` }
                   >
+                    {/* { decodeURIComponent(answers) } */}
                     { answers }
                   </button>
                 ))}
