@@ -127,6 +127,7 @@ class Game extends React.Component {
                   <p
                     data-testid="question-category"
                   >
+                    {/* {decodeURIComponent(results[indexQuestion]?.category)} */}
                     {results[indexQuestion]?.category}
                   </p>
                 </section>
@@ -134,6 +135,7 @@ class Game extends React.Component {
                   <p
                     data-testid="question-text"
                   >
+                    {/* {decodeURIComponent(results[indexQuestion]?.question)} */}
                     {results[indexQuestion]?.question}
                   </p>
                 </section>
