@@ -127,16 +127,16 @@ class Game extends React.Component {
                   <p
                     data-testid="question-category"
                   >
-                    {/* {decodeURIComponent(results[indexQuestion]?.category)} */}
-                    {results[indexQuestion]?.category}
+                    {decodeURIComponent(results[indexQuestion]?.category)}
+                    {/* {results[indexQuestion]?.category} */}
                   </p>
                 </section>
                 <section className="question-text-container">
                   <p
                     data-testid="question-text"
                   >
-                    {/* {decodeURIComponent(results[indexQuestion]?.question)} */}
-                    {results[indexQuestion]?.question}
+                    {decodeURIComponent(results[indexQuestion]?.question)}
+                    {/* {results[indexQuestion]?.question} */}
                   </p>
                 </section>
                 <Cronometro contador={ contador } counter={ this.counter } />
@@ -156,8 +156,8 @@ class Game extends React.Component {
                     type="button"
                     data-testid={ value ? 'correct-answer' : `wrong-answer${i}` }
                   >
-                    {/* { decodeURIComponent(answers) } */}
-                    { answers }
+                    { decodeURIComponent(answers) }
+                    {/* { answers } */}
                   </button>
                 ))}
                 </section>
